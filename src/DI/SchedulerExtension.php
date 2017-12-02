@@ -3,6 +3,7 @@
 namespace Tlapnet\Scheduler\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Statement;
 use Tlapnet\Scheduler\Job;
 use Tlapnet\Scheduler\Scheduler;
 use Tlapnet\Scheduler\SchedulerCommand;
@@ -30,7 +31,7 @@ class SchedulerExtension extends CompilerExtension
 			->setClass(SchedulerCommand::class)
 			->setAutowired(FALSE);
 		foreach ($config['jobs'] as $jobConfig) {
-			$job = new Job($jobConfig['cron'], $jobConfig['callback']);
+			$job = new Statement(Job::class, [$jobConfig['cron'], $jobConfig['callback']]);
 			$scheduler->addSetup('addJob', [$job]);
 		}
 	}

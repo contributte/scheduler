@@ -26,7 +26,8 @@ class SchedulerCommand extends Command
 	 */
 	protected function configure()
 	{
-		$this->setName('scheduler');
+		$this->setName('tlapnet:scheduler')
+			->setDescription('Run scheduler jobs');
 	}
 
 	/**

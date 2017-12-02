@@ -22,7 +22,8 @@ class Scheduler
 	 */
 	public function runJobs()
 	{
-		foreach ($this->jobs as $job) {
+		$jobs = $this->jobs;
+		foreach ($jobs as $job) {
 			$job->run();
 		}
 	}

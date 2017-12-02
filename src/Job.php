@@ -3,12 +3,13 @@
 namespace Tlapnet\Scheduler;
 
 use Cron\CronExpression;
+use DateTime;
 
 class Job
 {
 
-	/** @var string */
-	private $cron;
+	/** @var CronExpression */
+	private $expression;
 
 	/** @var callable */
 	private $callback;
@@ -19,7 +20,7 @@ class Job
 	 */
 	public function __construct($cron, $callback)
 	{
-		$this->cron = $cron;
+		$this->expression = CronExpression::factory($cron);
 		$this->callback = $callback;
 	}
 
@@ -28,8 +29,16 @@ class Job
 	 */
 	public function isDue()
 	{
-		$cron = CronExpression::factory($this->cron);
-		return $cron->isDue();
+		return $this->expression->isDue();
+	}
+
+	/**
+	 * @param DateTime $dateTime
+	 * @return bool
+	 */
+	public function isDueByDate(DateTime $dateTime)
+	{
+		return $this->expression->isDue($dateTime);
 	}
 
 	/**
@@ -37,9 +46,8 @@ class Job
 	 */
 	public function run()
 	{
-		if (!$this->isDue()) {
+		if (!$this->isDue())
 			return;
-		}
 		call_user_func($this->callback);
 	}
 
