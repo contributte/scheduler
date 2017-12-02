@@ -17,6 +17,18 @@ build:
         paths:
         - vendor/
 
+build:phpstan:
+    stage: build
+    image: dockette/ci-php7:latest
+    tags:
+      - php70
+    script:
+        - composer qa-install-phpstan
+    artifacts:
+        expire_in: 1 day
+        paths:
+        - temp/
+
 test:php56:
     stage: test
     image: dockette/ci-php5:latest
@@ -24,7 +36,6 @@ test:php56:
       - php56
     script:
         - composer qa
-        - composer phpstan
 
 test:php70:
     stage: test
