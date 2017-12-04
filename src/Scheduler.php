@@ -5,14 +5,14 @@ namespace Tlapnet\Scheduler;
 class Scheduler
 {
 
-	/** @var Job[] */
+	/** @var IJob[] */
 	private $jobs = [];
 
 	/**
-	 * @param Job $job
+	 * @param IJob $job
 	 * @return void
 	 */
-	public function addJob(Job $job)
+	public function addJob(IJob $job)
 	{
 		$this->jobs[] = $job;
 	}
@@ -24,6 +24,8 @@ class Scheduler
 	{
 		$jobs = $this->jobs;
 		foreach ($jobs as $job) {
+			if (!$job->isDue())
+				continue;
 			$job->run();
 		}
 	}

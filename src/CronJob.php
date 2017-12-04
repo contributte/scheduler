@@ -5,7 +5,7 @@ namespace Tlapnet\Scheduler;
 use Cron\CronExpression;
 use DateTime;
 
-class Job
+class CronJob implements IJob
 {
 
 	/** @var CronExpression */
@@ -46,8 +46,6 @@ class Job
 	 */
 	public function run()
 	{
-		if (!$this->isDue())
-			return;
 		call_user_func($this->callback);
 	}
 
