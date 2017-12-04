@@ -45,3 +45,4 @@ test:php70:
     script:
         - composer qa
         - composer phpstan
+        - composer phpunit
