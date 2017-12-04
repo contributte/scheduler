@@ -28,8 +28,8 @@ scheduler:
 		- {cron: '*/2 * * * *', callback: App\Model\Parrot::echo}
 ```
 
-Don't forget setup crontab. Use `tlapenet:scheduler` command.
+Don't forget setup crontab. Use `scheduler:run` command.
 
 ```
-* * * * * php path-to-project/console tlapnet:scheduler
+* * * * * php path-to-project/console scheduler:run
 ```
