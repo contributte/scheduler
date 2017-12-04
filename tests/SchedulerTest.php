@@ -13,7 +13,7 @@ final class SchedulerTest extends MockeryTest
 	/**
 	 * @return void
 	 */
-	public function testRunJobs()
+	public function testRun()
 	{
 		/** @var MockInterface|IJob $pendingJob */
 		$pendingJob = Mockery::mock(IJob::class)
@@ -35,11 +35,11 @@ final class SchedulerTest extends MockeryTest
 			->getMock();
 
 		$scheduler = new Scheduler();
-		$scheduler->addJob($pendingJob);
-		$scheduler->addJob($readyJob);
+		$scheduler->add($pendingJob);
+		$scheduler->add($readyJob);
 
 		// Execute
-		$scheduler->runJobs();
+		$scheduler->run();
 	}
 
 }

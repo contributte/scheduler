@@ -4,9 +4,10 @@ namespace Tlapnet\Scheduler\DI;
 
 use Nette\DI\CompilerExtension;
 use Nette\DI\Statement;
-use Tlapnet\Scheduler\CronJob;
+use Tlapnet\Scheduler\CallbackJob;
+use Tlapnet\Scheduler\Command\ListCommand;
+use Tlapnet\Scheduler\Command\RunCommand;
 use Tlapnet\Scheduler\Scheduler;
-use Tlapnet\Scheduler\SchedulerCommand;
 
 class SchedulerExtension extends CompilerExtension
 {
@@ -25,18 +26,27 @@ class SchedulerExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
+
+		// Scheduler
 		$scheduler = $builder->addDefinition($this->prefix('scheduler'))
 			->setClass(Scheduler::class);
-		$builder->addDefinition($this->prefix('schedulerCommand'))
-			->setClass(SchedulerCommand::class)
+
+		// Commands
+		$builder->addDefinition($this->prefix('runCommand'))
+			->setClass(RunCommand::class)
 			->setAutowired(FALSE);
+		$builder->addDefinition($this->prefix('listCommand'))
+			->setClass(ListCommand::class)
+			->setAutowired(FALSE);
+
+		// Jobs
 		foreach ($config['jobs'] as $job) {
 			if (is_array($job)) {
-				$job = new Statement(CronJob::class, [$job['cron'], $job['callback']]);
+				$job = new Statement(CallbackJob::class, [$job['cron'], $job['callback']]);
 			} else {
 				$job = new Statement($job);
 			}
-			$scheduler->addSetup('addJob', [$job]);
+			$scheduler->addSetup('add', [$job]);
 		}
 	}
 

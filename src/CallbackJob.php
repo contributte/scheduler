@@ -5,7 +5,7 @@ namespace Tlapnet\Scheduler;
 use Cron\CronExpression;
 use DateTime;
 
-class CronJob implements IJob
+class CallbackJob implements IJob
 {
 
 	/** @var CronExpression */
@@ -47,6 +47,22 @@ class CronJob implements IJob
 	public function run()
 	{
 		call_user_func($this->callback);
+	}
+
+	/**
+	 * @return CronExpression
+	 */
+	public function getExpression()
+	{
+		return $this->expression;
+	}
+
+	/**
+	 * @return callable
+	 */
+	public function getCallback()
+	{
+		return $this->callback;
 	}
 
 }

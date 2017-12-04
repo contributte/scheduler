@@ -1,12 +1,13 @@
 <?php
 
-namespace Tlapnet\Scheduler;
+namespace Tlapnet\Scheduler\Command;
 
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use Tlapnet\Scheduler\Scheduler;
 
-class SchedulerCommand extends Command
+class RunCommand extends Command
 {
 
 	/** @var Scheduler */
@@ -37,7 +38,7 @@ class SchedulerCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		$this->scheduler->runJobs();
+		$this->scheduler->run();
 		return 0;
 	}
 
