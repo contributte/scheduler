@@ -16,7 +16,7 @@
   "require-dev": {
     "ninjify/qa": "~0.4.0",
     "mockery/mockery": "^1.0",
-    "phpunit/phpunit": "^6.5"
+    "phpunit/phpunit": "^5.7.25"
   },
   "autoload": {
     "psr-4": {
@@ -41,7 +41,7 @@
       "temp/phpstan/vendor/bin/phpstan analyse -l 7 src"
     ],
     "phpunit": [
-      "phpunit tests --colors=always --dont-report-useless-tests"
+      "phpunit tests --colors=always"
     ]
   }
 }
