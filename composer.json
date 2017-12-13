@@ -42,6 +42,11 @@
     ],
     "phpunit": [
       "phpunit tests --colors=always"
+    ],
+    "ci": [
+      "@qa",
+      "@phpstan",
+      "@phpunit"
     ]
   }
 }
