@@ -2,7 +2,7 @@
 
 namespace Tlapnet\Scheduler;
 
-class CallbackJob extends CronJob
+class CallbackJob extends ExpressionJob
 {
 
 	/** @var callable */

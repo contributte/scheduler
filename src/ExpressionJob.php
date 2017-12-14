@@ -5,7 +5,7 @@ namespace Tlapnet\Scheduler;
 use Cron\CronExpression;
 use DateTime;
 
-abstract class CronJob implements IJob
+abstract class ExpressionJob implements IJob
 {
 
 	/** @var CronExpression */
@@ -20,18 +20,10 @@ abstract class CronJob implements IJob
 	}
 
 	/**
-	 * @return bool
-	 */
-	public function isDue()
-	{
-		return $this->expression->isDue();
-	}
-
-	/**
 	 * @param DateTime $dateTime
 	 * @return bool
 	 */
-	public function isDueByDate(DateTime $dateTime)
+	public function isDue(DateTime $dateTime)
 	{
 		return $this->expression->isDue($dateTime);
 	}

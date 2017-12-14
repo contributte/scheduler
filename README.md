@@ -17,9 +17,22 @@ extensions:
 	scheduler: Tlapnet\Scheduler\DI\SchedulerExtension
 ```
 
-## Usage
+Set-up crontab. Use `scheduler:run` command.
 
-Add some jobs.
+```
+* * * * * php path-to-project/console scheduler:run
+```
+
+Optionally set temp path for lock files.
+
+```yaml
+scheduler:
+	path: '%tempDir%/scheduler'
+```
+
+## Jobs
+
+### Callback job
 
 ```yaml
 scheduler:
@@ -28,8 +41,58 @@ scheduler:
 		- {cron: '*/2 * * * *', callback: App\Model\Parrot::echo}
 ```
 
-Don't forget setup crontab. Use `scheduler:run` command.
+### Custom job
+
+Use `IJob` interface.
+
+```php
+
+class MyAwesomeJob implements IJob
+{
+
+	/**
+	 * @param DateTime $dateTime
+	 * @return bool
+	 */
+	public function isDue(DateTime $dateTime)
+	{
+		return TRUE; // When is job ready to run
+	}
+
+	/**
+	 * @return void
+	 */
+	public function run()
+	{
+		// Do something
+	}
+
+}
 
 ```
-* * * * * php path-to-project/console scheduler:run
+
+And register it.
+
+```yaml
+scheduler:
+	jobs:
+		- App\Model\MyAwesomeJob
+```
+
+## Commands
+
+### List
+
+List all jobs.
+
+```
+scheduler:list
+```
+
+### Run
+
+Run all due jobs.
+
+```
+scheduler:run
 ```

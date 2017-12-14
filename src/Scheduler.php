@@ -2,11 +2,32 @@
 
 namespace Tlapnet\Scheduler;
 
-class Scheduler
+use DateTime;
+use Tlapnet\Scheduler\Helpers\Debugger;
+
+class Scheduler implements IScheduler
 {
 
 	/** @var IJob[] */
-	private $jobs = [];
+	protected $jobs = [];
+
+	/**
+	 * @return void
+	 */
+	public function run()
+	{
+		$dateTime = new DateTime();
+		$jobs = $this->jobs;
+		foreach ($jobs as $job) {
+			if (!$job->isDue($dateTime))
+				continue;
+			try {
+				$job->run();
+			} catch (\Exception $e) {
+				Debugger::log($e);
+			}
+		}
+	}
 
 	/**
 	 * @param IJob $job
@@ -24,6 +45,23 @@ class Scheduler
 
 	/**
 	 * @param string $key
+	 * @return IJob|NULL
+	 */
+	public function get($key)
+	{
+		return isset($this->jobs[$key]) ? $this->jobs[$key] : NULL;
+	}
+
+	/**
+	 * @return IJob[]
+	 */
+	public function getAll()
+	{
+		return $this->jobs;
+	}
+
+	/**
+	 * @param string $key
 	 * @return void
 	 */
 	public function remove($key)
@@ -34,22 +72,9 @@ class Scheduler
 	/**
 	 * @return void
 	 */
-	public function run()
+	public function removeAll()
 	{
-		$jobs = $this->jobs;
-		foreach ($jobs as $job) {
-			if (!$job->isDue())
-				continue;
-			$job->run();
-		}
-	}
-
-	/**
-	 * @return IJob[]
-	 */
-	public function getAll()
-	{
-		return $this->jobs;
+		$this->jobs = [];
 	}
 
 }

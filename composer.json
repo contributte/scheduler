@@ -38,7 +38,7 @@
       "composer require -d temp/phpstan phpstan/phpstan"
     ],
     "phpstan": [
-      "temp/phpstan/vendor/bin/phpstan analyse -l 7 src"
+      "temp/phpstan/vendor/bin/phpstan analyse -l 7 -c phpstan.neon src"
     ],
     "phpunit": [
       "phpunit tests --colors=always"

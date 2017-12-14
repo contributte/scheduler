@@ -5,18 +5,18 @@ namespace Tlapnet\Scheduler\Command;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Tlapnet\Scheduler\Scheduler;
+use Tlapnet\Scheduler\IScheduler;
 
 class RunCommand extends Command
 {
 
-	/** @var Scheduler */
+	/** @var IScheduler */
 	private $scheduler;
 
 	/**
-	 * @param Scheduler $scheduler
+	 * @param IScheduler $scheduler
 	 */
-	public function __construct(Scheduler $scheduler)
+	public function __construct(IScheduler $scheduler)
 	{
 		parent::__construct();
 		$this->scheduler = $scheduler;

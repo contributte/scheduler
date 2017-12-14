@@ -3,17 +3,19 @@
 namespace Tlapnet\Scheduler\DI;
 
 use Nette\DI\CompilerExtension;
+use Nette\DI\Helpers;
 use Nette\DI\Statement;
 use Tlapnet\Scheduler\CallbackJob;
 use Tlapnet\Scheduler\Command\ListCommand;
 use Tlapnet\Scheduler\Command\RunCommand;
-use Tlapnet\Scheduler\Scheduler;
+use Tlapnet\Scheduler\LockingScheduler;
 
 class SchedulerExtension extends CompilerExtension
 {
 
 	/** @var mixed[] */
 	private $defaults = [
+		'path' => '%tempDir%/scheduler',
 		'jobs' => [],
 	];
 
@@ -26,10 +28,11 @@ class SchedulerExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);
+		$config = Helpers::expand($config, $builder->parameters);
 
 		// Scheduler
 		$scheduler = $builder->addDefinition($this->prefix('scheduler'))
-			->setClass(Scheduler::class);
+			->setClass(LockingScheduler::class, [$config['path']]);
 
 		// Commands
 		$builder->addDefinition($this->prefix('runCommand'))
