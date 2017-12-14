@@ -1,12 +1,6 @@
 {
   "name": "tlapnet/scheduler",
   "license": "proprietary",
-  "authors": [
-    {
-      "name": "Tlapnet",
-      "email": "webmaster@tlapnet.cz"
-    }
-  ],
   "require": {
     "php": ">=5.6",
     "dragonmantank/cron-expression": "^1.2.1",
