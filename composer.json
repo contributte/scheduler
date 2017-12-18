@@ -1,6 +1,20 @@
 {
   "name": "contributte/scheduler",
-  "license": "proprietary",
+  "description": "Scheduler",
+  "keywords": ["nette", "cron"],
+  "type": "library",
+  "license": ["MIT"],
+  "homepage": "https://github.com/contributte/scheduler",
+  "authors": [
+    {
+      "name": "Milan Felix Sulc",
+      "homepage": "https://f3l1x.io"
+    },
+    {
+      "name": "Josef Benjac",
+      "homepage": "http://josefbenjac.com"
+    }
+  ],
   "require": {
     "php": ">=5.6",
     "dragonmantank/cron-expression": "~1.2.1",
@@ -27,7 +41,12 @@
       "linter src tests",
       "codesniffer src tests"
     ],
-    "qa-install-phpstan": [
+    "ci": [
+      "@qa",
+      "@phpstan",
+      "@phpunit"
+    ],
+    "phpstan-install": [
       "mkdir -p temp/phpstan",
       "composer require -d temp/phpstan phpstan/phpstan"
     ],
@@ -36,11 +55,11 @@
     ],
     "phpunit": [
       "phpunit tests --colors=always"
-    ],
-    "ci": [
-      "@qa",
-      "@phpstan",
-      "@phpunit"
     ]
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.1.x-dev"
+    }
   }
 }
