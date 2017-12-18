@@ -1,9 +1,9 @@
 <?php
 
-namespace Tlapnet\Scheduler;
+namespace Contributte\Scheduler;
 
+use Contributte\Scheduler\Helpers\Debugger;
 use DateTime;
-use Tlapnet\Scheduler\Helpers\Debugger;
 
 class LockingScheduler extends Scheduler
 {

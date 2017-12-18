@@ -1,6 +1,6 @@
 <?php
 
-namespace Tlapnet\Scheduler\Helpers;
+namespace Contributte\Scheduler\Helpers;
 
 use Exception;
 

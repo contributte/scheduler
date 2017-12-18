@@ -1,11 +1,11 @@
 <?php
 
-namespace Tests\Tlapnet\Scheduler;
+namespace Tests\Contributte\Scheduler;
 
+use Contributte\Scheduler\IJob;
+use Contributte\Scheduler\Scheduler;
 use Mockery;
 use Mockery\MockInterface;
-use Tlapnet\Scheduler\IJob;
-use Tlapnet\Scheduler\Scheduler;
 
 final class SchedulerTest extends MockeryTest
 {

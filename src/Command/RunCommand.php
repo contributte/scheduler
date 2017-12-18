@@ -1,11 +1,11 @@
 <?php
 
-namespace Tlapnet\Scheduler\Command;
+namespace Contributte\Scheduler\Command;
 
+use Contributte\Scheduler\IScheduler;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
-use Tlapnet\Scheduler\IScheduler;
 
 class RunCommand extends Command
 {

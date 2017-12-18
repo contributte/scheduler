@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Tlapnet\Scheduler;
+namespace Tests\Contributte\Scheduler;
 
 use Mockery;
 use PHPUnit\Framework\TestCase;

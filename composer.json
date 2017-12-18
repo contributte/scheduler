@@ -1,25 +1,25 @@
 {
-  "name": "tlapnet/scheduler",
+  "name": "contributte/scheduler",
   "license": "proprietary",
   "require": {
     "php": ">=5.6",
-    "dragonmantank/cron-expression": "^1.2.1",
-    "nette/di": "^2.4.10",
-    "symfony/console": "^3.3.13"
+    "dragonmantank/cron-expression": "~1.2.1",
+    "nette/di": "~2.4.10",
+    "symfony/console": "~3.3.14"
   },
   "require-dev": {
     "ninjify/qa": "~0.4.0",
-    "mockery/mockery": "^1.0",
-    "phpunit/phpunit": "^5.7.25"
+    "mockery/mockery": "~1.0",
+    "phpunit/phpunit": "~5.7.26"
   },
   "autoload": {
     "psr-4": {
-      "Tlapnet\\Scheduler\\": "src/"
+      "Contributte\\Scheduler\\": "src/"
     }
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Tlapnet\\Scheduler\\": "tests/"
+      "Tests\\Contributte\\Scheduler\\": "tests/"
     }
   },
   "scripts": {

@@ -1,6 +1,6 @@
 <?php
 
-namespace Tlapnet\Scheduler;
+namespace Contributte\Scheduler;
 
 class CallbackJob extends ExpressionJob
 {

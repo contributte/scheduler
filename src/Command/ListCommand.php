@@ -1,17 +1,17 @@
 <?php
 
-namespace Tlapnet\Scheduler\Command;
+namespace Contributte\Scheduler\Command;
 
+use Contributte\Scheduler\CallbackJob;
+use Contributte\Scheduler\ExpressionJob;
+use Contributte\Scheduler\IJob;
+use Contributte\Scheduler\IScheduler;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Tlapnet\Scheduler\CallbackJob;
-use Tlapnet\Scheduler\ExpressionJob;
-use Tlapnet\Scheduler\IJob;
-use Tlapnet\Scheduler\IScheduler;
 
 class ListCommand extends Command
 {

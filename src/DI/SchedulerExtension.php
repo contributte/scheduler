@@ -1,14 +1,14 @@
 <?php
 
-namespace Tlapnet\Scheduler\DI;
+namespace Contributte\Scheduler\DI;
 
+use Contributte\Scheduler\CallbackJob;
+use Contributte\Scheduler\Command\ListCommand;
+use Contributte\Scheduler\Command\RunCommand;
+use Contributte\Scheduler\LockingScheduler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
 use Nette\DI\Statement;
-use Tlapnet\Scheduler\CallbackJob;
-use Tlapnet\Scheduler\Command\ListCommand;
-use Tlapnet\Scheduler\Command\RunCommand;
-use Tlapnet\Scheduler\LockingScheduler;
 
 class SchedulerExtension extends CompilerExtension
 {
