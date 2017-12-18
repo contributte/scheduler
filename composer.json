@@ -1,6 +1,6 @@
 {
   "name": "contributte/scheduler",
-  "description": "Scheduler",
+  "description": "PHP job scheduler (cron) with locking",
   "keywords": ["nette", "cron"],
   "type": "library",
   "license": ["MIT"],
