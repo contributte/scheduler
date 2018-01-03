@@ -26,11 +26,15 @@ composer require contributte/scheduler
 
 ## Versions
 
-@TODO
+| State       | Version       | Branch   | PHP      |
+|-------------|---------------|----------|----------|
+| dev         | `dev-master`  | `master` | `>= 5.6` |
 
 ## Overview
 
-@TODO
+- [Configuration - how to configure](https://github.com/contributte/scheduler/blob/master/.docs/README.md#configuration)
+- [Jobs - how to create jobs](https://github.com/contributte/scheduler/blob/master/.docs/README.md#jobs)
+- [Commands - list of available commands](https://github.com/contributte/scheduler/blob/master/.docs/README.md#commands)
 
 ## Maintainers
 

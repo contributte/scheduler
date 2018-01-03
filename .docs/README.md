@@ -2,19 +2,13 @@
 
 Small lib for executing php callbacks using cron expression.
 
-## Installation
-
-Install via composer.
-
-```
-composer require contributte/scheduler
-```
+## Configuration
 
 Register extension.
 
 ```yaml
 extensions:
-	scheduler: Tlapnet\Scheduler\DI\SchedulerExtension
+    scheduler: Tlapnet\Scheduler\DI\SchedulerExtension
 ```
 
 Set-up crontab. Use `scheduler:run` command.
@@ -27,7 +21,7 @@ Optionally set temp path for lock files.
 
 ```yaml
 scheduler:
-	path: '%tempDir%/scheduler'
+    path: '%tempDir%/scheduler'
 ```
 
 ## Jobs
@@ -36,9 +30,9 @@ scheduler:
 
 ```yaml
 scheduler:
-	jobs:
-		- {cron: '* * * * *', callback: App\Model\Pirate::arrgghh}
-		- {cron: '*/2 * * * *', callback: App\Model\Parrot::echo}
+    jobs:
+        - {cron: '* * * * *', callback: App\Model\Pirate::arrgghh}
+        - {cron: '*/2 * * * *', callback: App\Model\Parrot::echo}
 ```
 
 ### Custom job
@@ -50,12 +44,24 @@ Use `IJob` interface.
 class MyAwesomeJob implements IJob
 {
 
+	/** @var Database */
+	private $database;
+	
+	/**
+	 * @param Database $database
+	 */
+	public function __construct(Database $database)
+	{
+		$this->database = $database;
+	}
+
 	/**
 	 * @param DateTime $dateTime
 	 * @return bool
 	 */
 	public function isDue(DateTime $dateTime)
 	{
+		//$this->database->...
 		return TRUE; // When is job ready to run
 	}
 
@@ -75,8 +81,8 @@ And register it.
 
 ```yaml
 scheduler:
-	jobs:
-		- App\Model\MyAwesomeJob
+    jobs:
+        - App\Model\MyAwesomeJob
 ```
 
 ## Commands
