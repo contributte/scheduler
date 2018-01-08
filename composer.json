@@ -55,6 +55,9 @@
     ],
     "phpunit": [
       "phpunit tests --colors=always"
+    ],
+    "coverage": [
+      "phpunit tests --colors=always -c tests/coverage.xml"
     ]
   },
   "extra": {

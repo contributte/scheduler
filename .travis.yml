@@ -38,13 +38,13 @@ jobs:
       script:
         - composer run-script qa
 
-#    - stage: Test Coverage
-#      php: 7.1
-#      script:
-#        - composer run-script coverage
-#      after_script:
-#        - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
-#        - php coveralls.phar --verbose --config tests/.coveralls.yml
+    - stage: Test Coverage
+      php: 7.1
+      script:
+        - composer run-script coverage
+      after_script:
+        - wget https://github.com/satooshi/php-coveralls/releases/download/v1.0.1/coveralls.phar
+        - php coveralls.phar --verbose --config tests/.coveralls.yml
 
     - stage: Phpstan
       php: 7.1
