@@ -17,7 +17,7 @@ Set-up crontab. Use `scheduler:run` command.
 * * * * * php path-to-project/console scheduler:run
 ```
 
-Optionally set temp path for lock files.
+Optionally you can set temp path for lock files.
 
 ```yaml
 scheduler:
@@ -51,7 +51,7 @@ Cron expression:
 
 ### Custom job
 
-Use `IJob` interface.
+Use `IJob` interface. Every job is registered as service in DIC, so you can use other services.
 
 ```php
 
@@ -108,6 +108,12 @@ List all jobs.
 ```
 scheduler:list
 ```
+
+| Key | Type                              | Is due  | Cron        | Callback              |
+|-----|-----------------------------------|---------|-------------|-----------------------|
+| 0   | Contributte\Scheduler\CallbackJob | TRUE    | * * * * *   | App\Model\Parrot::hey |
+| 1   | Contributte\Scheduler\CallbackJob | FALSE   | */2 * * * * | App\Model\Pirate::hey |
+| 2   | App\Model\MyAwesomeJob            | TRUE    | Dynamic     | Dynamic               |
 
 ### Run
 
