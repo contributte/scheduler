@@ -17,9 +17,9 @@
   ],
   "require": {
     "php": ">=5.6",
-    "dragonmantank/cron-expression": "~1.2.1",
-    "nette/di": "~2.4.10",
-    "symfony/console": "~3.3.14"
+    "dragonmantank/cron-expression": "^1.2.1",
+    "nette/di": "^2.4.10",
+    "symfony/console": "^3.3.14"
   },
   "require-dev": {
     "ninjify/qa": "~0.4.0",
