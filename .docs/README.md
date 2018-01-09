@@ -91,7 +91,7 @@ class MyAwesomeJob implements IJob
 
 ```
 
-And register it.
+And don't forget register it.
 
 ```yaml
 scheduler:
@@ -101,6 +101,14 @@ scheduler:
 
 ## Commands
 
+### Help
+
+Print cron syntax.
+
+```
+scheduler:help
+```
+
 ### List
 
 List all jobs.
@@ -108,12 +116,6 @@ List all jobs.
 ```
 scheduler:list
 ```
-
-| Key | Type                              | Is due  | Cron        | Callback              |
-|-----|-----------------------------------|---------|-------------|-----------------------|
-| 0   | Contributte\Scheduler\CallbackJob | TRUE    | * * * * *   | App\Model\Parrot::hey |
-| 1   | Contributte\Scheduler\CallbackJob | FALSE   | */2 * * * * | App\Model\Pirate::hey |
-| 2   | App\Model\MyAwesomeJob            | TRUE    | Dynamic     | Dynamic               |
 
 ### Run
 
