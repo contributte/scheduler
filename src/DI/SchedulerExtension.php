@@ -3,6 +3,7 @@
 namespace Contributte\Scheduler\DI;
 
 use Contributte\Scheduler\CallbackJob;
+use Contributte\Scheduler\Command\HelpCommand;
 use Contributte\Scheduler\Command\ListCommand;
 use Contributte\Scheduler\Command\RunCommand;
 use Contributte\Scheduler\LockingScheduler;
@@ -40,6 +41,9 @@ class SchedulerExtension extends CompilerExtension
 			->setAutowired(FALSE);
 		$builder->addDefinition($this->prefix('listCommand'))
 			->setClass(ListCommand::class)
+			->setAutowired(FALSE);
+		$builder->addDefinition($this->prefix('helpCommand'))
+			->setClass(HelpCommand::class)
 			->setAutowired(FALSE);
 
 		// Jobs
