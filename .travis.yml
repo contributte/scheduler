@@ -5,10 +5,6 @@ php:
     - 7.1
     - 7.2
 
-before_install:
-  # turn off XDebug
-  - phpenv config-rm xdebug.ini || return 0
-
 install:
   # Composer
   - travis_retry composer install --no-progress --prefer-dist
