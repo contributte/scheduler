@@ -10,7 +10,6 @@ use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 class ListCommand extends Command
@@ -34,8 +33,7 @@ class ListCommand extends Command
 	protected function configure()
 	{
 		$this->setName('scheduler:list')
-			->setDescription('List all scheduler jobs')
-			->addOption('due', NULL, InputOption::VALUE_OPTIONAL);
+			->setDescription('List all scheduler jobs');
 	}
 
 	/**
@@ -45,20 +43,11 @@ class ListCommand extends Command
 	 */
 	protected function execute(InputInterface $input, OutputInterface $output)
 	{
-		// Due Option
-		$dueOption = $input->getOption('due');
-		if ($dueOption !== NULL) {
-			$dueOption = (bool) $dueOption;
-		}
 		$jobs = $this->scheduler->getAll();
 		$table = new Table($output);
 		$table->setHeaders(['Key', 'Type', 'Is due', 'Cron', 'Callback']);
 		$dateTime = new DateTime();
 		foreach ($jobs as $key => $job) {
-			// Skip due option
-			if ($dueOption !== NULL && $dueOption !== $job->isDue($dateTime)) {
-				continue;
-			}
 			$table->addRow(self::formatRow($key, $job, $dateTime));
 		}
 		$table->render();
