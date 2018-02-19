@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler;
 
 use Contributte\Scheduler\Helpers\Debugger;
@@ -11,18 +13,12 @@ class LockingScheduler extends Scheduler
 	/** @var string */
 	protected $path;
 
-	/**
-	 * @param string $path
-	 */
-	public function __construct($path)
+	public function __construct(string $path)
 	{
 		$this->path = $path;
 	}
 
-	/**
-	 * @return void
-	 */
-	public function run()
+	public function run(): void
 	{
 		if (!file_exists($this->path)) {
 			mkdir($this->path, 0777, TRUE);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler\DI;
 
 use Contributte\Scheduler\CallbackJob;
@@ -22,10 +24,8 @@ class SchedulerExtension extends CompilerExtension
 
 	/**
 	 * Register services
-	 *
-	 * @return void
 	 */
-	public function loadConfiguration()
+	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->validateConfig($this->defaults);

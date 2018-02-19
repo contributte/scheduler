@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler\Helpers;
 
 use Exception;
@@ -7,11 +9,7 @@ use Exception;
 class Debugger
 {
 
-	/**
-	 * @param Exception $e
-	 * @return void
-	 */
-	public static function log(Exception $e)
+	public static function log(Exception $e): void
 	{
 		if (class_exists('\Tracy\Debugger')) {
 			\Tracy\Debugger::log($e);

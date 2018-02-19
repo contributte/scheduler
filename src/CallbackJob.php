@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler;
 
 class CallbackJob extends ExpressionJob
@@ -8,28 +10,18 @@ class CallbackJob extends ExpressionJob
 	/** @var callable */
 	private $callback;
 
-	/**
-	 * @param string $cron
-	 * @param callable $callback
-	 */
-	public function __construct($cron, $callback)
+	public function __construct(string $cron, callable $callback)
 	{
 		parent::__construct($cron);
 		$this->callback = $callback;
 	}
 
-	/**
-	 * @return void
-	 */
-	public function run()
+	public function run(): void
 	{
 		call_user_func($this->callback);
 	}
 
-	/**
-	 * @return callable
-	 */
-	public function getCallback()
+	public function getCallback(): callable
 	{
 		return $this->callback;
 	}

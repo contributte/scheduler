@@ -1,42 +1,25 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler;
 
 interface IScheduler
 {
 
-	/**
-	 * @return void
-	 */
-	public function run();
+	public function run(): void;
 
-	/**
-	 * @param IJob $job
-	 * @param string|NULL $key
-	 * @return void
-	 */
-	public function add(IJob $job, $key = NULL);
+	public function add(IJob $job, ?string $key = NULL): void;
 
-	/**
-	 * @param string $key
-	 * @return IJob|NULL
-	 */
-	public function get($key);
+	public function get(string $key): ?IJob;
 
 	/**
 	 * @return IJob[]
 	 */
-	public function getAll();
+	public function getAll(): array;
 
-	/**
-	 * @param string $key
-	 * @return void
-	 */
-	public function remove($key);
+	public function remove(string $key): void;
 
-	/**
-	 * @return void
-	 */
-	public function removeAll();
+	public function removeAll(): void;
 
 }

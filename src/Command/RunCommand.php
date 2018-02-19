@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler\Command;
 
 use Contributte\Scheduler\IScheduler;
@@ -13,30 +15,19 @@ class RunCommand extends Command
 	/** @var IScheduler */
 	private $scheduler;
 
-	/**
-	 * @param IScheduler $scheduler
-	 */
 	public function __construct(IScheduler $scheduler)
 	{
 		parent::__construct();
 		$this->scheduler = $scheduler;
 	}
 
-	/**
-	 * @return void
-	 */
-	protected function configure()
+	protected function configure(): void
 	{
 		$this->setName('scheduler:run')
 			->setDescription('Run scheduler jobs');
 	}
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 * @return int
-	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$this->scheduler->run();
 		return 0;

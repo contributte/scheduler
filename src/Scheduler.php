@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler;
 
 use Contributte\Scheduler\Helpers\Debugger;
@@ -11,10 +13,7 @@ class Scheduler implements IScheduler
 	/** @var IJob[] */
 	protected $jobs = [];
 
-	/**
-	 * @return void
-	 */
-	public function run()
+	public function run(): void
 	{
 		$dateTime = new DateTime();
 		$jobs = $this->jobs;
@@ -29,12 +28,7 @@ class Scheduler implements IScheduler
 		}
 	}
 
-	/**
-	 * @param IJob $job
-	 * @param string|NULL $key
-	 * @return void
-	 */
-	public function add(IJob $job, $key = NULL)
+	public function add(IJob $job, ?string $key = NULL): void
 	{
 		if ($key !== NULL) {
 			$this->jobs[$key] = $job;
@@ -43,11 +37,7 @@ class Scheduler implements IScheduler
 		$this->jobs[] = $job;
 	}
 
-	/**
-	 * @param string $key
-	 * @return IJob|NULL
-	 */
-	public function get($key)
+	public function get(string $key): ?IJob
 	{
 		return isset($this->jobs[$key]) ? $this->jobs[$key] : NULL;
 	}
@@ -55,24 +45,17 @@ class Scheduler implements IScheduler
 	/**
 	 * @return IJob[]
 	 */
-	public function getAll()
+	public function getAll(): array
 	{
 		return $this->jobs;
 	}
 
-	/**
-	 * @param string $key
-	 * @return void
-	 */
-	public function remove($key)
+	public function remove(string $key): void
 	{
 		unset($this->jobs[$key]);
 	}
 
-	/**
-	 * @return void
-	 */
-	public function removeAll()
+	public function removeAll(): void
 	{
 		$this->jobs = [];
 	}

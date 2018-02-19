@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Contributte\Scheduler;
 
 use Cron\CronExpression;
@@ -11,27 +13,17 @@ abstract class ExpressionJob implements IJob
 	/** @var CronExpression */
 	protected $expression;
 
-	/**
-	 * @param string $cron
-	 */
-	public function __construct($cron)
+	public function __construct(string $cron)
 	{
 		$this->expression = CronExpression::factory($cron);
 	}
 
-	/**
-	 * @param DateTime $dateTime
-	 * @return bool
-	 */
-	public function isDue(DateTime $dateTime)
+	public function isDue(DateTime $dateTime): bool
 	{
 		return $this->expression->isDue($dateTime);
 	}
 
-	/**
-	 * @return CronExpression
-	 */
-	public function getExpression()
+	public function getExpression(): CronExpression
 	{
 		return $this->expression;
 	}
