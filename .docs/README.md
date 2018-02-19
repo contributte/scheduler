@@ -61,28 +61,18 @@ class MyAwesomeJob implements IJob
 	/** @var Database */
 	private $database;
 	
-	/**
-	 * @param Database $database
-	 */
 	public function __construct(Database $database)
 	{
 		$this->database = $database;
 	}
 
-	/**
-	 * @param DateTime $dateTime
-	 * @return bool
-	 */
-	public function isDue(DateTime $dateTime)
+	public function isDue(DateTime $dateTime): bool
 	{
 		//$this->database->...
 		return TRUE; // When is job ready to run
 	}
 
-	/**
-	 * @return void
-	 */
-	public function run()
+	public function run(): void
 	{
 		// Do something
 	}
