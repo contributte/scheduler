@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types = 1);
+
 namespace Tests\Contributte\Scheduler;
 
 use Contributte\Scheduler\DI\SchedulerExtension;
@@ -11,10 +13,7 @@ use Nette\DI\ContainerLoader;
 final class SchedulerExtensionTest extends MockeryTest
 {
 
-	/**
-	 * @return void
-	 */
-	public function testRegister()
+	public function testRegister(): void
 	{
 		$loader = new ContainerLoader(__DIR__ . '/temp', TRUE);
 		$class = $loader->load(function (Compiler $compiler) {
