@@ -28,7 +28,10 @@ class Scheduler implements IScheduler
 		}
 	}
 
-	public function add(IJob $job, ?string $key = NULL): void
+    /**
+     * @param string|int|null $key
+     */
+	public function add(IJob $job, $key = NULL): void
 	{
 		if ($key !== NULL) {
 			$this->jobs[$key] = $job;
@@ -37,7 +40,10 @@ class Scheduler implements IScheduler
 		$this->jobs[] = $job;
 	}
 
-	public function get(string $key): ?IJob
+    /**
+     * @param string|int $key
+     */
+	public function get($key): ?IJob
 	{
 		return isset($this->jobs[$key]) ? $this->jobs[$key] : NULL;
 	}
@@ -50,7 +56,10 @@ class Scheduler implements IScheduler
 		return $this->jobs;
 	}
 
-	public function remove(string $key): void
+    /**
+     * @param string|int $key
+     */
+	public function remove($key): void
 	{
 		unset($this->jobs[$key]);
 	}
