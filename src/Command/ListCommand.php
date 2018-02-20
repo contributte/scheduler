@@ -13,6 +13,7 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
+use DateTimeInterface;
 
 class ListCommand extends Command
 {
@@ -48,7 +49,7 @@ class ListCommand extends Command
 	/**
 	 * @return string[]
 	 */
-	private static function formatRow(string $key, IJob $job, DateTime $dateTime): array
+	private static function formatRow(string $key, IJob $job, DateTimeInterface $dateTime): array
 	{
 		// Common
 		$row = [

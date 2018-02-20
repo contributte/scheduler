@@ -4,12 +4,12 @@ declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
-use DateTime;
+use DateTimeInterface;
 
 interface IJob
 {
 
-	public function isDue(DateTime $dateTime): bool;
+	public function isDue(DateTimeInterface $dateTime): bool;
 
 	public function run(): void;
 
