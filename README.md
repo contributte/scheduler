@@ -29,6 +29,7 @@ composer require contributte/scheduler
 | State       | Version       | Branch   | PHP      |
 |-------------|---------------|----------|----------|
 | dev         | `dev-master`  | `master` | `>= 5.6` |
+| stable      | `^0.1`        | `master` | `>= 5.6` |
 
 ## Overview
 
