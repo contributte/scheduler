@@ -1,12 +1,13 @@
 <?php declare(strict_types = 1);
 
-namespace Tests\Contributte\Scheduler;
+namespace Tests\Contributte\Scheduler\DI;
 
 use Contributte\Scheduler\DI\SchedulerExtension;
 use Contributte\Scheduler\IScheduler;
 use Nette\DI\Compiler;
 use Nette\DI\Container;
 use Nette\DI\ContainerLoader;
+use Tests\Contributte\Scheduler\MockeryTest;
 
 final class SchedulerExtensionTest extends MockeryTest
 {
