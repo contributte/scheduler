@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Tests\Contributte\Scheduler;
 
@@ -8,10 +8,7 @@ use PHPUnit\Framework\TestCase;
 abstract class MockeryTest extends TestCase
 {
 
-	/**
-	 * @return void
-	 */
-	protected function tearDown()
+	protected function tearDown(): void
 	{
 		Mockery::close();
 	}

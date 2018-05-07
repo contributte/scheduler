@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler\Command;
 
@@ -9,21 +9,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class HelpCommand extends Command
 {
 
-	/**
-	 * @return void
-	 */
-	protected function configure()
+	protected function configure(): void
 	{
 		$this->setName('scheduler:help')
 			->setDescription('Print cron syntax');
 	}
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 * @return int
-	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$output->writeln('Cron syntax: ');
 		$output->writeln('

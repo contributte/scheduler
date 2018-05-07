@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler\Command;
 
@@ -18,30 +18,19 @@ class ListCommand extends Command
 	/** @var IScheduler */
 	private $scheduler;
 
-	/**
-	 * @param IScheduler $scheduler
-	 */
 	public function __construct(IScheduler $scheduler)
 	{
 		parent::__construct();
 		$this->scheduler = $scheduler;
 	}
 
-	/**
-	 * @return void
-	 */
-	protected function configure()
+	protected function configure(): void
 	{
 		$this->setName('scheduler:list')
 			->setDescription('List all scheduler jobs');
 	}
 
-	/**
-	 * @param InputInterface $input
-	 * @param OutputInterface $output
-	 * @return int
-	 */
-	protected function execute(InputInterface $input, OutputInterface $output)
+	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$jobs = $this->scheduler->getAll();
 		$table = new Table($output);
@@ -55,12 +44,9 @@ class ListCommand extends Command
 	}
 
 	/**
-	 * @param string $key
-	 * @param IJob $job
-	 * @param DateTime $dateTime
 	 * @return string[]
 	 */
-	private static function formatRow($key, IJob $job, DateTime $dateTime)
+	private static function formatRow(string $key, IJob $job, DateTime $dateTime): array
 	{
 		// Common
 		$row = [

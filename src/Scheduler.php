@@ -1,9 +1,10 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
 use Contributte\Scheduler\Helpers\Debugger;
 use DateTime;
+use Throwable;
 
 class Scheduler implements IScheduler
 {
@@ -11,32 +12,28 @@ class Scheduler implements IScheduler
 	/** @var IJob[] */
 	protected $jobs = [];
 
-	/**
-	 * @return void
-	 */
-	public function run()
+	public function run(): void
 	{
 		$dateTime = new DateTime();
 		$jobs = $this->jobs;
 		foreach ($jobs as $job) {
-			if (!$job->isDue($dateTime))
+			if (!$job->isDue($dateTime)) {
 				continue;
+			}
 			try {
 				$job->run();
-			} catch (\Exception $e) {
+			} catch (Throwable $e) {
 				Debugger::log($e);
 			}
 		}
 	}
 
 	/**
-	 * @param IJob $job
-	 * @param string|NULL $key
-	 * @return void
+	 * @param string|int|null $key
 	 */
-	public function add(IJob $job, $key = NULL)
+	public function add(IJob $job, $key = null): void
 	{
-		if ($key !== NULL) {
+		if ($key !== null) {
 			$this->jobs[$key] = $job;
 			return;
 		}
@@ -44,35 +41,30 @@ class Scheduler implements IScheduler
 	}
 
 	/**
-	 * @param string $key
-	 * @return IJob|NULL
+	 * @param string|int $key
 	 */
-	public function get($key)
+	public function get($key): ?IJob
 	{
-		return isset($this->jobs[$key]) ? $this->jobs[$key] : NULL;
+		return $this->jobs[$key] ?? null;
 	}
 
 	/**
 	 * @return IJob[]
 	 */
-	public function getAll()
+	public function getAll(): array
 	{
 		return $this->jobs;
 	}
 
 	/**
-	 * @param string $key
-	 * @return void
+	 * @param string|int $key
 	 */
-	public function remove($key)
+	public function remove($key): void
 	{
 		unset($this->jobs[$key]);
 	}
 
-	/**
-	 * @return void
-	 */
-	public function removeAll()
+	public function removeAll(): void
 	{
 		$this->jobs = [];
 	}

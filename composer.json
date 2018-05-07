@@ -1,9 +1,14 @@
 {
   "name": "contributte/scheduler",
   "description": "PHP job scheduler (cron) with locking",
-  "keywords": ["nette", "cron"],
+  "keywords": [
+    "nette",
+    "cron"
+  ],
+  "license": [
+    "MIT"
+  ],
   "type": "library",
-  "license": ["MIT"],
   "homepage": "https://github.com/contributte/scheduler",
   "authors": [
     {
@@ -16,15 +21,16 @@
     }
   ],
   "require": {
-    "php": ">=5.6",
+    "php": ">=7.1",
     "dragonmantank/cron-expression": "^1.2.1",
     "nette/di": "^2.4.10",
-    "symfony/console": "^3.3.14"
+    "symfony/console": "^3.3.14 || ^4.0.0"
   },
   "require-dev": {
-    "ninjify/qa": "~0.4.0",
-    "mockery/mockery": "~1.0",
-    "phpunit/phpunit": "~5.7.26"
+    "ninjify/qa": "^0.8.0",
+    "mockery/mockery": "~1.0.0",
+    "phpunit/phpunit": "~5.7.27",
+    "tracy/tracy": "~2.4.14"
   },
   "autoload": {
     "psr-4": {
@@ -36,33 +42,32 @@
       "Tests\\Contributte\\Scheduler\\": "tests/"
     }
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "scripts": {
-    "qa": [
-      "linter src tests",
-      "codesniffer src tests"
-    ],
     "ci": [
       "@qa",
       "@phpstan",
       "@phpunit"
     ],
-    "phpstan-install": [
-      "mkdir -p temp/phpstan",
-      "composer require -d temp/phpstan phpstan/phpstan"
-    ],
-    "phpstan": [
-      "temp/phpstan/vendor/bin/phpstan analyse -l 7 -c phpstan.neon src"
+    "qa": [
+      "linter src tests",
+      "codesniffer src tests"
     ],
     "phpunit": [
       "phpunit tests --colors=always"
     ],
     "coverage": [
       "phpunit tests --colors=always -c tests/coverage.xml"
+    ],
+    "phpstan-install": [
+      "mkdir -p temp/phpstan",
+      "composer require -d temp/phpstan phpstan/phpstan:0.9.2",
+      "composer require -d temp/phpstan phpstan/phpstan-nette:0.9",
+      "composer require -d temp/phpstan phpstan/phpstan-strict-rules:0.9"
+    ],
+    "phpstan": [
+      "temp/phpstan/vendor/bin/phpstan analyse -l max -c phpstan.neon src"
     ]
-  },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "0.1.x-dev"
-    }
   }
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
@@ -7,15 +7,8 @@ use DateTime;
 interface IJob
 {
 
-	/**
-	 * @param DateTime $dateTime
-	 * @return bool
-	 */
-	public function isDue(DateTime $dateTime);
+	public function isDue(DateTime $dateTime): bool;
 
-	/**
-	 * @return void
-	 */
-	public function run();
+	public function run(): void;
 
 }

@@ -1,4 +1,4 @@
-<?php
+<?php declare(strict_types = 1);
 
 namespace Tests\Contributte\Scheduler;
 
@@ -10,15 +10,12 @@ use Mockery\MockInterface;
 final class SchedulerTest extends MockeryTest
 {
 
-	/**
-	 * @return void
-	 */
-	public function testRun()
+	public function testRun(): void
 	{
 		/** @var MockInterface|IJob $pendingJob */
 		$pendingJob = Mockery::mock(IJob::class)
 			->shouldReceive('isDue')
-			->andReturn(FALSE)
+			->andReturn(false)
 			->once()
 			->getMock()
 			->shouldNotReceive('run')
@@ -27,7 +24,7 @@ final class SchedulerTest extends MockeryTest
 		/** @var MockInterface|IJob $readyJob */
 		$readyJob = Mockery::mock(IJob::class)
 			->shouldReceive('isDue')
-			->andReturn(TRUE)
+			->andReturn(true)
 			->once()
 			->getMock()
 			->shouldReceive('run')
@@ -42,10 +39,7 @@ final class SchedulerTest extends MockeryTest
 		$scheduler->run();
 	}
 
-	/**
-	 * @return void
-	 */
-	public function testManage()
+	public function testManage(): void
 	{
 		/** @var MockInterface|IJob $foo */
 		$foo = Mockery::mock(IJob::class);
