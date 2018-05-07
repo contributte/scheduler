@@ -24,6 +24,25 @@ class ListCommand extends Command
 		$this->scheduler = $scheduler;
 	}
 
+	protected function configure(): void
+	{
+		$this->setName('scheduler:list')
+			->setDescription('List all scheduler jobs');
+	}
+
+	protected function execute(InputInterface $input, OutputInterface $output): int
+	{
+		$jobs = $this->scheduler->getAll();
+		$table = new Table($output);
+		$table->setHeaders(['Key', 'Type', 'Is due', 'Cron', 'Callback']);
+		$dateTime = new DateTime();
+		foreach ($jobs as $key => $job) {
+			$table->addRow(self::formatRow($key, $job, $dateTime));
+		}
+		$table->render();
+		return 0;
+	}
+
 	/**
 	 * @return string[]
 	 */
@@ -48,25 +67,6 @@ class ListCommand extends Command
 			$row[] = 'Dynamic';
 		}
 		return $row;
-	}
-
-	protected function configure(): void
-	{
-		$this->setName('scheduler:list')
-			->setDescription('List all scheduler jobs');
-	}
-
-	protected function execute(InputInterface $input, OutputInterface $output): int
-	{
-		$jobs = $this->scheduler->getAll();
-		$table = new Table($output);
-		$table->setHeaders(['Key', 'Type', 'Is due', 'Cron', 'Callback']);
-		$dateTime = new DateTime();
-		foreach ($jobs as $key => $job) {
-			$table->addRow(self::formatRow($key, $job, $dateTime));
-		}
-		$table->render();
-		return 0;
 	}
 
 }
