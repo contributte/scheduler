@@ -1,3 +1,4 @@
-parameters:
-	ignoreErrors:
-		- '#Call to static method log\(\) on an unknown class Tracy\\Debugger.#'
+includes:
+	- temp/phpstan/vendor/phpstan/phpstan-strict-rules/rules.neon
+	- temp/phpstan/vendor/phpstan/phpstan-nette/extension.neon
+	- temp/phpstan/vendor/phpstan/phpstan-nette/rules.neon

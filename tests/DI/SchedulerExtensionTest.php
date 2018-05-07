@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Tests\Contributte\Scheduler;
 
@@ -15,8 +13,8 @@ final class SchedulerExtensionTest extends MockeryTest
 
 	public function testRegister(): void
 	{
-		$loader = new ContainerLoader(__DIR__ . '/temp', TRUE);
-		$class = $loader->load(function (Compiler $compiler) {
+		$loader = new ContainerLoader(__DIR__ . '/temp', true);
+		$class = $loader->load(function (Compiler $compiler): void {
 			$compiler->addConfig([
 				'parameters' => [
 					'tempDir' => '',
@@ -25,7 +23,7 @@ final class SchedulerExtensionTest extends MockeryTest
 			$compiler->addExtension('scheduler', new SchedulerExtension());
 		});
 		/** @var Container $container */
-		$container = new $class;
+		$container = new $class();
 		self::assertInstanceOf(IScheduler::class, $container->getByType(IScheduler::class));
 	}
 

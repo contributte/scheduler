@@ -1,11 +1,10 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
 use Contributte\Scheduler\Helpers\Debugger;
 use DateTime;
+use Throwable;
 
 class Scheduler implements IScheduler
 {
@@ -18,34 +17,35 @@ class Scheduler implements IScheduler
 		$dateTime = new DateTime();
 		$jobs = $this->jobs;
 		foreach ($jobs as $job) {
-			if (!$job->isDue($dateTime))
+			if (!$job->isDue($dateTime)) {
 				continue;
+			}
 			try {
 				$job->run();
-			} catch (\Exception $e) {
+			} catch (Throwable $e) {
 				Debugger::log($e);
 			}
 		}
 	}
 
-    /**
-     * @param string|int|null $key
-     */
-	public function add(IJob $job, $key = NULL): void
+	/**
+	 * @param string|int|null $key
+	 */
+	public function add(IJob $job, $key = null): void
 	{
-		if ($key !== NULL) {
+		if ($key !== null) {
 			$this->jobs[$key] = $job;
 			return;
 		}
 		$this->jobs[] = $job;
 	}
 
-    /**
-     * @param string|int $key
-     */
+	/**
+	 * @param string|int $key
+	 */
 	public function get($key): ?IJob
 	{
-		return isset($this->jobs[$key]) ? $this->jobs[$key] : NULL;
+		return $this->jobs[$key] ?? null;
 	}
 
 	/**
@@ -56,9 +56,9 @@ class Scheduler implements IScheduler
 		return $this->jobs;
 	}
 
-    /**
-     * @param string|int $key
-     */
+	/**
+	 * @param string|int $key
+	 */
 	public function remove($key): void
 	{
 		unset($this->jobs[$key]);

@@ -1,15 +1,13 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
-use DateTimeInterface;
+use DateTime;
 
 interface IJob
 {
 
-	public function isDue(DateTimeInterface $dateTime): bool;
+	public function isDue(DateTime $dateTime): bool;
 
 	public function run(): void;
 

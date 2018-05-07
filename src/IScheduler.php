@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
@@ -12,7 +10,7 @@ interface IScheduler
     /**
      * @param string|int|null $key
      */
-	public function add(IJob $job, $key = NULL): void;
+	public function add(IJob $job, $key = null): void;
 
     /**
      * @param string|int $key

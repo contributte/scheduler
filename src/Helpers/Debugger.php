@@ -1,18 +1,17 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler\Helpers;
 
-use Exception;
+use Throwable;
+use Tracy\Debugger as TracyDebugger;
 
 class Debugger
 {
 
-	public static function log(Exception $e): void
+	public static function log(Throwable $e): void
 	{
-		if (class_exists('\Tracy\Debugger')) {
-			\Tracy\Debugger::log($e);
+		if (class_exists(TracyDebugger::class)) {
+			TracyDebugger::log($e);
 		}
 	}
 

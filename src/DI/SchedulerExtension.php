@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler\DI;
 
@@ -38,13 +36,13 @@ class SchedulerExtension extends CompilerExtension
 		// Commands
 		$builder->addDefinition($this->prefix('runCommand'))
 			->setClass(RunCommand::class)
-			->setAutowired(FALSE);
+			->setAutowired(false);
 		$builder->addDefinition($this->prefix('listCommand'))
 			->setClass(ListCommand::class)
-			->setAutowired(FALSE);
+			->setAutowired(false);
 		$builder->addDefinition($this->prefix('helpCommand'))
 			->setClass(HelpCommand::class)
-			->setAutowired(FALSE);
+			->setAutowired(false);
 
 		// Jobs
 		foreach ($config['jobs'] as $job) {

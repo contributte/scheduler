@@ -1,6 +1,4 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Tests\Contributte\Scheduler;
 
@@ -17,7 +15,7 @@ final class SchedulerTest extends MockeryTest
 		/** @var MockInterface|IJob $pendingJob */
 		$pendingJob = Mockery::mock(IJob::class)
 			->shouldReceive('isDue')
-			->andReturn(FALSE)
+			->andReturn(false)
 			->once()
 			->getMock()
 			->shouldNotReceive('run')
@@ -26,7 +24,7 @@ final class SchedulerTest extends MockeryTest
 		/** @var MockInterface|IJob $readyJob */
 		$readyJob = Mockery::mock(IJob::class)
 			->shouldReceive('isDue')
-			->andReturn(TRUE)
+			->andReturn(true)
 			->once()
 			->getMock()
 			->shouldReceive('run')

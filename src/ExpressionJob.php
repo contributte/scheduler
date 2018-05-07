@@ -1,11 +1,9 @@
-<?php
-
-declare(strict_types = 1);
+<?php declare(strict_types = 1);
 
 namespace Contributte\Scheduler;
 
 use Cron\CronExpression;
-use DateTimeInterface;
+use DateTime;
 
 abstract class ExpressionJob implements IJob
 {
@@ -18,7 +16,7 @@ abstract class ExpressionJob implements IJob
 		$this->expression = CronExpression::factory($cron);
 	}
 
-	public function isDue(DateTimeInterface $dateTime): bool
+	public function isDue(DateTime $dateTime): bool
 	{
 		return $this->expression->isDue($dateTime);
 	}
