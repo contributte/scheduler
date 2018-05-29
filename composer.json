@@ -12,7 +12,7 @@
   "homepage": "https://github.com/contributte/scheduler",
   "authors": [
     {
-      "name": "Milan Felix Sulc",
+      "name": "Milan Felix Šulc",
       "homepage": "https://f3l1x.io"
     },
     {
@@ -45,11 +45,6 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "scripts": {
-    "ci": [
-      "@qa",
-      "@phpstan",
-      "@phpunit"
-    ],
     "qa": [
       "linter src tests",
       "codesniffer src tests"
