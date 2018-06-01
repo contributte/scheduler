@@ -37,7 +37,7 @@ class ListCommand extends Command
 		$table->setHeaders(['Key', 'Type', 'Is due', 'Cron', 'Callback']);
 		$dateTime = new DateTime();
 		foreach ($jobs as $key => $job) {
-			$table->addRow(self::formatRow($key, $job, $dateTime));
+			$table->addRow(self::formatRow(is_string($key) ? $key : '', $job, $dateTime));
 		}
 		$table->render();
 		return 0;
