@@ -45,13 +45,13 @@ class SchedulerExtension extends CompilerExtension
 			->setAutowired(false);
 
 		// Jobs
-		foreach ($config['jobs'] as $job) {
+		foreach ($config['jobs'] as $key => $job) {
 			if (is_array($job)) {
 				$job = new Statement(CallbackJob::class, [$job['cron'], $job['callback']]);
 			} else {
 				$job = new Statement($job);
 			}
-			$scheduler->addSetup('add', [$job]);
+			$scheduler->addSetup('add', [$job, is_string($key) ? $key : '']);
 		}
 	}
 

@@ -87,6 +87,7 @@ And don't forget register it.
 scheduler:
     jobs:
         - App\Model\MyAwesomeJob
+        myOtherJob: App\Model\MyOtherJob
 ```
 
 ## Commands
