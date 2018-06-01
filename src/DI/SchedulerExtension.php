@@ -51,7 +51,7 @@ class SchedulerExtension extends CompilerExtension
 			} else {
 				$job = new Statement($job);
 			}
-			$scheduler->addSetup('add', [$job, is_string($key) ? $key : '']);
+			$scheduler->addSetup('add', [$job, $key]);
 		}
 	}
 
