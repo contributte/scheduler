@@ -11,13 +11,13 @@ extensions:
     scheduler: Contributte\Scheduler\DI\SchedulerExtension
 ```
 
-Set-up crontab. Use `scheduler:run` command.
+Set-up crontab. Use the `scheduler:run` command.
 
 ```
 * * * * * php path-to-project/console scheduler:run
 ```
 
-Optionally you can set temp path for lock files.
+Optionally, you can set a temp path for storing lock files.
 
 ```yaml
 scheduler:
@@ -51,7 +51,7 @@ Cron expression:
 
 ### Custom job
 
-Use `IJob` interface. Every job is registered as service in DIC, so you can use other services.
+Use the `IJob` interface. Every job is registered as a service in the DIC, so you can use other services.
 
 ```php
 
@@ -69,7 +69,7 @@ class MyAwesomeJob implements IJob
 	public function isDue(DateTime $dateTime): bool
 	{
 		//$this->database->...
-		return TRUE; // When is job ready to run
+		return TRUE; // When the job is ready to run
 	}
 
 	public function run(): void
@@ -81,7 +81,7 @@ class MyAwesomeJob implements IJob
 
 ```
 
-And don't forget register it.
+And don't forget to register it.
 
 ```yaml
 scheduler:
