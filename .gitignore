@@ -6,6 +6,5 @@
 /composer.lock
 
 # Tests
-/temp/
-/tests/DI/temp/
+/temp
 /coverage.xml

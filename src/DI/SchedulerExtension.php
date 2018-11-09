@@ -31,17 +31,17 @@ class SchedulerExtension extends CompilerExtension
 
 		// Scheduler
 		$scheduler = $builder->addDefinition($this->prefix('scheduler'))
-			->setClass(LockingScheduler::class, [$config['path']]);
+			->setFactory(LockingScheduler::class, [$config['path']]);
 
 		// Commands
 		$builder->addDefinition($this->prefix('runCommand'))
-			->setClass(RunCommand::class)
+			->setFactory(RunCommand::class)
 			->setAutowired(false);
 		$builder->addDefinition($this->prefix('listCommand'))
-			->setClass(ListCommand::class)
+			->setFactory(ListCommand::class)
 			->setAutowired(false);
 		$builder->addDefinition($this->prefix('helpCommand'))
-			->setClass(HelpCommand::class)
+			->setFactory(HelpCommand::class)
 			->setAutowired(false);
 
 		// Jobs
