@@ -6,6 +6,7 @@ use Contributte\Scheduler\CallbackJob;
 use Contributte\Scheduler\ExpressionJob;
 use Contributte\Scheduler\IJob;
 use Contributte\Scheduler\IScheduler;
+use Cron\CronExpression;
 use Nette\Utils\DateTime;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
@@ -44,7 +45,7 @@ class ListCommand extends Command
 	}
 
 	/**
-	 * @return string[]
+	 * @return string[]|callable[]|CronExpression[]
 	 */
 	private static function formatRow(string $key, IJob $job, DateTime $dateTime): array
 	{
