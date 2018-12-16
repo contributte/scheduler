@@ -29,6 +29,7 @@ class HelpCommand extends Command
 |    +-------------------- hour (0 - 23)
 +------------------------- min (0 - 59)');
 		$output->writeln('');
+
 		return 0;
 	}
 

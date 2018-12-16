@@ -28,6 +28,7 @@ class RunCommand extends Command
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{
 		$this->scheduler->run();
+
 		return 0;
 	}
 

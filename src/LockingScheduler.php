@@ -26,6 +26,7 @@ class LockingScheduler extends Scheduler
 
 		$dateTime = new DateTime();
 		$jobs = $this->jobs;
+
 		foreach ($jobs as $id => $job) {
 			if (!$job->isDue($dateTime)) {
 				continue;

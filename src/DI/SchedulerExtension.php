@@ -51,6 +51,7 @@ class SchedulerExtension extends CompilerExtension
 			} else {
 				$job = new Statement($job);
 			}
+
 			$scheduler->addSetup('add', [$job, $key]);
 		}
 	}

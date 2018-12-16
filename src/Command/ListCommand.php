@@ -37,10 +37,13 @@ class ListCommand extends Command
 		$table = new Table($output);
 		$table->setHeaders(['Key', 'Type', 'Is due', 'Cron', 'Callback']);
 		$dateTime = new DateTime();
+
 		foreach ($jobs as $key => $job) {
 			$table->addRow(self::formatRow(is_string($key) ? $key : '', $job, $dateTime));
 		}
+
 		$table->render();
+
 		return 0;
 	}
 
@@ -55,18 +58,21 @@ class ListCommand extends Command
 			get_class($job),
 			$job->isDue($dateTime) ? 'TRUE' : 'FALSE',
 		];
+
 		// Expression
 		if ($job instanceof ExpressionJob) {
 			$row[] = $job->getExpression();
 		} else {
 			$row[] = 'Dynamic';
 		}
+
 		// Callback
 		if ($job instanceof CallbackJob) {
 			$row[] = $job->getCallback();
 		} else {
 			$row[] = 'Dynamic';
 		}
+
 		return $row;
 	}
 

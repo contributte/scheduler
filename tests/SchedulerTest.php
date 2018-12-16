@@ -10,6 +10,9 @@ use Mockery\MockInterface;
 final class SchedulerTest extends MockeryTest
 {
 
+	/**
+	 * @doesNotPerformAssertions
+	 */
 	public function testRun(): void
 	{
 		/** @var MockInterface|IJob $pendingJob */
