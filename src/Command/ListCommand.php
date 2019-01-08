@@ -68,7 +68,14 @@ class ListCommand extends Command
 
 		// Callback
 		if ($job instanceof CallbackJob) {
-			$row[] = $job->getCallback();
+			$callback = $job->getCallback();
+			if (is_string($callback)) {
+				$row[] = $callback;
+			} else {
+				$class = $callback[0];
+				$callback = $callback[1];
+				$row[] = get_class($class) . '->' . $callback . '()';
+			}
 		} else {
 			$row[] = 'Dynamic';
 		}
