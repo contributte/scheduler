@@ -31,10 +31,14 @@ scheduler:
 Set cron expression and php callback.
 
 ```yaml
+services:
+    foo: App\Model\Foo
+
+
 scheduler:
     jobs:
-        - {cron: '* * * * *', callback: App\Model\Pirate::arrgghh}
-        - {cron: '*/2 * * * *', callback: App\Model\Parrot::echo}
+        - {cron: '* * * * *', callback: [@foo, echo]}}
+        - {cron: '*/2 * * * *', callback: App\Model\Bar::echo}
 ```
 
 Cron expression:

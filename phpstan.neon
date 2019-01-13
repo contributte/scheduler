@@ -8,3 +8,4 @@ parameters:
 	ignoreErrors:
 		# Typecasting to resource is too complicated
 		- '#^Parameter \#1 \$fp of function (flock|fclose) expects resource, resource\|false given\.$#'
+		- '#^Cannot access offset \d+ on callable\.$#'
