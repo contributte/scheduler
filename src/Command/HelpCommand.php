@@ -9,9 +9,12 @@ use Symfony\Component\Console\Output\OutputInterface;
 class HelpCommand extends Command
 {
 
+	/** @var string */
+	protected static $defaultName = 'scheduler:help';
+
 	protected function configure(): void
 	{
-		$this->setName('scheduler:help')
+		$this->setName(self::$defaultName)
 			->setDescription('Print cron syntax');
 	}
 

@@ -16,6 +16,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ListCommand extends Command
 {
 
+	/** @var string */
+	protected static $defaultName = 'scheduler:list';
+
 	/** @var IScheduler */
 	private $scheduler;
 
@@ -27,7 +30,7 @@ class ListCommand extends Command
 
 	protected function configure(): void
 	{
-		$this->setName('scheduler:list')
+		$this->setName(self::$defaultName)
 			->setDescription('List all scheduler jobs');
 	}
 
