@@ -22,10 +22,15 @@ final class SchedulerExtensionTest extends MockeryTest
 				],
 			]);
 			$compiler->addExtension('scheduler', new SchedulerExtension());
+			$compiler->loadConfig(__DIR__ . '/jobs.config.neon');
 		});
 		/** @var Container $container */
 		$container = new $class();
-		self::assertInstanceOf(IScheduler::class, $container->getByType(IScheduler::class));
+
+		$scheduler = $container->getByType(IScheduler::class);
+		self::assertInstanceOf(IScheduler::class, $scheduler);
+
+		self::assertCount(3, $scheduler->getAll());
 	}
 
 }

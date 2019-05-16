@@ -10,15 +10,19 @@ use Contributte\Scheduler\LockingScheduler;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Helpers;
 use Nette\DI\Statement;
+use Nette\Schema\Expect;
+use Nette\Schema\Schema;
 
 class SchedulerExtension extends CompilerExtension
 {
 
-	/** @var mixed[] */
-	private $defaults = [
-		'path' => '%tempDir%/scheduler',
-		'jobs' => [],
-	];
+	public function getConfigSchema(): Schema
+	{
+		return Expect::structure([
+			 'path' => Expect::string('%tempDir%/scheduler'),
+			 'jobs' => Expect::array(),
+		]);
+	}
 
 	/**
 	 * Register services
@@ -26,7 +30,7 @@ class SchedulerExtension extends CompilerExtension
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
-		$config = $this->validateConfig($this->defaults);
+		$config = (array) $this->config;
 		$config = Helpers::expand($config, $builder->parameters);
 
 		// Scheduler
