@@ -1,0 +1,8 @@
+services:
+	callbackJob: Tests\Contributte\Scheduler\DI\CallbackJob
+
+scheduler:
+	jobs:
+		- {cron: '* * * * *', callback: Tests\Contributte\Scheduler\DI\CallbackJob::foo}
+		- {cron: '* * * * *', callback: [@callbackJob, bar]}
+		- Tests\Contributte\Scheduler\DI\CustomJob
