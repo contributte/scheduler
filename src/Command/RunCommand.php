@@ -10,6 +10,9 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RunCommand extends Command
 {
 
+	/** @var string */
+	protected static $defaultName = 'scheduler:run';
+
 	/** @var IScheduler */
 	private $scheduler;
 
@@ -21,7 +24,7 @@ class RunCommand extends Command
 
 	protected function configure(): void
 	{
-		$this->setName('scheduler:run')
+		$this->setName(self::$defaultName)
 			->setDescription('Run scheduler jobs');
 	}
 
