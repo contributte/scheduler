@@ -49,11 +49,12 @@ Set cron expression and php callback.
 services:
     foo: App\Model\Foo
 
-
 scheduler:
     jobs:
-        - {cron: '* * * * *', callback: [@foo, echo]}}
-        - {cron: '*/2 * * * *', callback: App\Model\Bar::echo}
+        - cron: '* * * * *'
+          callback: [@foo, echo]
+        - cron: '*/2 * * * *'
+          callback: App\Model\Bar::echo
 ```
 
 Cron expression:
@@ -73,22 +74,17 @@ Cron expression:
 Use the `IJob` interface. Every job is registered as a service in the DIC, so you can use other services.
 
 ```php
+use Contributte\Scheduler\IJob;
 
 class MyAwesomeJob implements IJob
 {
 
-	/** @var Database */
-	private $database;
-	
-	public function __construct(Database $database)
-	{
-		$this->database = $database;
-	}
-
 	public function isDue(DateTime $dateTime): bool
 	{
-		//$this->database->...
-		return TRUE; // When the job is ready to run
+		if ($jobIsReadyToRun) {
+			return true;
+		}
+		return false;
 	}
 
 	public function run(): void
@@ -115,7 +111,7 @@ scheduler:
 
 Print cron syntax.
 
-```
+```bash
 scheduler:help
 ```
 
@@ -123,7 +119,7 @@ scheduler:help
 
 List all jobs.
 
-```
+```bash
 scheduler:list
 ```
 
@@ -131,7 +127,7 @@ scheduler:list
 
 Run all due jobs.
 
-```
+```bash
 scheduler:run
 ```
 

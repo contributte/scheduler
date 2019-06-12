@@ -20,8 +20,8 @@
   ],
   "require": {
     "php": "^7.2",
+    "contributte/di": "^0.4.0",
     "dragonmantank/cron-expression": "^2.2.0",
-    "nette/di": "~3.0.0",
     "symfony/console": "^4.2.0"
   },
   "require-dev": {
@@ -52,7 +52,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "0.5.x-dev"
+      "dev-master": "0.6.x-dev"
     }
   }
 }

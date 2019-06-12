@@ -2,40 +2,52 @@
 
 namespace Contributte\Scheduler\DI;
 
+use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Contributte\Scheduler\CallbackJob;
 use Contributte\Scheduler\Command\HelpCommand;
 use Contributte\Scheduler\Command\ListCommand;
 use Contributte\Scheduler\Command\RunCommand;
+use Contributte\Scheduler\IScheduler;
 use Contributte\Scheduler\LockingScheduler;
+use Contributte\Scheduler\Scheduler;
+use InvalidArgumentException;
 use Nette\DI\CompilerExtension;
-use Nette\DI\Helpers;
-use Nette\DI\Statement;
+use Nette\DI\Definitions\Definition;
+use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
+use stdClass;
 
+/**
+ * @property-read stdClass $config
+ */
 class SchedulerExtension extends CompilerExtension
 {
 
 	public function getConfigSchema(): Schema
 	{
 		return Expect::structure([
-			 'path' => Expect::string('%tempDir%/scheduler'),
-			 'jobs' => Expect::array(),
+			'path' => Expect::string()->nullable(),
+			'jobs' => Expect::arrayOf(
+				Expect::anyOf(Expect::string(), Expect::array(), Expect::type(Statement::class))
+			),
 		]);
 	}
 
-	/**
-	 * Register services
-	 */
 	public function loadConfiguration(): void
 	{
 		$builder = $this->getContainerBuilder();
-		$config = (array) $this->config;
-		$config = Helpers::expand($config, $builder->parameters);
+		$config = $this->config;
+		$definitionHelper = new ExtensionDefinitionsHelper($this->compiler);
 
 		// Scheduler
-		$scheduler = $builder->addDefinition($this->prefix('scheduler'))
-			->setFactory(LockingScheduler::class, [$config['path']]);
+		$schedulerDefinition = $builder->addDefinition($this->prefix('scheduler'))
+			->setType(IScheduler::class);
+		if ($config->path !== null) {
+			$schedulerDefinition->setFactory(LockingScheduler::class, [$config->path]);
+		} else {
+			$schedulerDefinition->setFactory(Scheduler::class);
+		}
 
 		// Commands
 		$builder->addDefinition($this->prefix('runCommand'))
@@ -49,14 +61,21 @@ class SchedulerExtension extends CompilerExtension
 			->setAutowired(false);
 
 		// Jobs
-		foreach ($config['jobs'] as $key => $job) {
-			if (is_array($job)) {
-				$job = new Statement(CallbackJob::class, [$job['cron'], $job['callback']]);
+		foreach ($config->jobs as $jobName => $jobConfig) {
+			if (is_array($jobConfig) && (isset($jobConfig['cron']) || isset($jobConfig['callback']))) {
+				if (!isset($jobConfig['cron'], $jobConfig['callback'])) {
+					throw new InvalidArgumentException(sprintf('Both options "callback" and "cron" of %s > jobs > %s must be configured', $this->name, $jobName));
+				}
+				$jobDefinition = new Statement(CallbackJob::class, [$jobConfig['cron'], $jobConfig['callback']]);
 			} else {
-				$job = new Statement($job);
+				$jobPrefix = $this->prefix('job.' . $jobName);
+				$jobDefinition = $definitionHelper->getDefinitionFromConfig($jobConfig, $jobPrefix);
+				if ($jobDefinition instanceof Definition) {
+					$jobDefinition->setAutowired(false);
+				}
 			}
 
-			$scheduler->addSetup('add', [$job, $key]);
+			$schedulerDefinition->addSetup('add', [$jobDefinition, $jobName]);
 		}
 	}
 
