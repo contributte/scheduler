@@ -1,15 +1,30 @@
-# Scheduler
+# Contributte Scheduler
 
-Small lib for executing php callbacks using cron expression.
+Executing php callbacks using cron expression.
 
-## Configuration
+## Content
 
-Register extension.
+- [Setup](#setup)
+- [Configuration](#configuration)
+- [Jobs](#jobs)
+- [Commands](#commands)
+
+## Setup
+
+Require package
+
+```bash
+composer require contributte/scheduler
+```
+
+Register extension
 
 ```yaml
 extensions:
     scheduler: Contributte\Scheduler\DI\SchedulerExtension
 ```
+
+## Configuration
 
 Set-up crontab. Use the `scheduler:run` command.
 
