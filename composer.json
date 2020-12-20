@@ -22,13 +22,13 @@
   ],
   "require": {
     "php": ">=7.2",
-    "contributte/di": "^0.4.0",
-    "dragonmantank/cron-expression": "^2.2.0",
-    "symfony/console": "^5.0"
+    "contributte/di": "^0.5",
+    "dragonmantank/cron-expression": "^3.0.1",
+    "symfony/console": "^5.0.0"
   },
   "require-dev": {
     "mockery/mockery": "^1.2.0",
-    "ninjify/qa": "^0.9.0",
+    "ninjify/qa": "^0.12",
     "ninjify/nunjuck": "^0.4",
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-deprecation-rules": "^0.12",
