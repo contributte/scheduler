@@ -13,7 +13,7 @@ abstract class ExpressionJob implements IJob
 
 	public function __construct(string $cron)
 	{
-		$this->expression = CronExpression::factory($cron);
+		$this->expression = new CronExpression($cron);
 	}
 
 	public function isDue(DateTime $dateTime): bool

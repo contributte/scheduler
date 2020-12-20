@@ -20,6 +20,7 @@ class Scheduler implements IScheduler
 			if (!$job->isDue($dateTime)) {
 				continue;
 			}
+
 			try {
 				$job->run();
 			} catch (Throwable $e) {
@@ -37,6 +38,7 @@ class Scheduler implements IScheduler
 			$this->jobs[$key] = $job;
 			return;
 		}
+
 		$this->jobs[] = $job;
 	}
 

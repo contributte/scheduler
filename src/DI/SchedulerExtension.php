@@ -66,6 +66,7 @@ class SchedulerExtension extends CompilerExtension
 				if (!isset($jobConfig['cron'], $jobConfig['callback'])) {
 					throw new InvalidArgumentException(sprintf('Both options "callback" and "cron" of %s > jobs > %s must be configured', $this->name, $jobName));
 				}
+
 				$jobDefinition = new Statement(CallbackJob::class, [$jobConfig['cron'], $jobConfig['callback']]);
 			} else {
 				$jobPrefix = $this->prefix('job.' . $jobName);

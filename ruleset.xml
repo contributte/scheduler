@@ -3,17 +3,16 @@
 	<!-- Contributte Coding Standard -->
 	<rule ref="./vendor/ninjify/coding-standard/contributte.xml">
 		<exclude name="SlevomatCodingStandard.ControlStructures.RequireTernaryOperator.TernaryOperatorNotUsed"/>
-		<exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing.IncorrectLinesCountBeforeControlStructure"/>
-		<exclude name="SlevomatCodingStandard.ControlStructures.ControlStructureSpacing.IncorrectLinesCountAfterControlStructure"/>
 	</rule>
 
 	<!-- Specific rules -->
 	<rule ref="SlevomatCodingStandard.Files.TypeNameMatchesFileName">
 		<properties>
-			<property name="rootNamespaces" type="array" value="
-				src=>Contributte\Scheduler,
-				tests=>Tests\Contributte\Scheduler
-			"/>
+			<property name="rootNamespaces" type="array">
+				<element key="src" value="Contributte\Scheduler"/>
+				<element key="tests/cases" value="Tests\Cases"/>
+				<element key="tests/fixtures" value="Tests\Fixtures"/>
+			</property>
 		</properties>
 	</rule>
 
