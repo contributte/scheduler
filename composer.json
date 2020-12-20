@@ -29,11 +29,11 @@
   "require-dev": {
     "mockery/mockery": "^1.2.0",
     "ninjify/qa": "^0.9.0",
+    "ninjify/nunjuck": "^0.4",
     "phpstan/phpstan": "^0.12",
     "phpstan/phpstan-deprecation-rules": "^0.12",
     "phpstan/phpstan-nette": "^0.12",
     "phpstan/phpstan-strict-rules": "^0.12",
-    "phpunit/phpunit": "^8.2.1",
     "tracy/tracy": "~2.6.2"
   },
   "autoload": {
@@ -43,7 +43,7 @@
   },
   "autoload-dev": {
     "psr-4": {
-      "Tests\\Contributte\\Scheduler\\": "tests/"
+      "Tests\\Fixtures\\": "tests/fixtures"
     }
   },
   "minimum-stability": "dev",
