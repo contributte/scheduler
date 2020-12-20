@@ -3,7 +3,9 @@
   "description": "PHP job scheduler (cron) with locking",
   "keywords": [
     "nette",
-    "cron"
+    "cron",
+    "contributte",
+    "scheduler"
   ],
   "license": "MIT",
   "type": "library",
