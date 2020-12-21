@@ -21,7 +21,7 @@ Register extension
 
 ```yaml
 extensions:
-    scheduler: Contributte\Scheduler\DI\SchedulerExtension
+  scheduler: Contributte\Scheduler\DI\SchedulerExtension
 ```
 
 ## Configuration
@@ -36,29 +36,37 @@ Optionally, you can set a temp path for storing lock files.
 
 ```yaml
 scheduler:
-    path: '%tempDir%/scheduler'
+  path: '%tempDir%/scheduler'
 ```
 
 ## Jobs
 
+This package defines 2 types of jobs:
+
+- callback job
+- service job
+
 ### Callback job
 
-Set cron expression and php callback.
+Register your callbacks under `scheduler.jobs` key.
 
 ```yaml
 services:
-    foo: App\Model\Foo
+  stats: App\Model\Stats
 
 scheduler:
-    jobs:
-        - cron: '* * * * *'
-          callback: [@foo, echo]
-        - cron: '*/2 * * * *'
-          callback: App\Model\Bar::echo
+  jobs:
+    # stats must be registered as service and have method calculate
+    - { cron: '* * * * *', callback: [ @stats, calculate ] }
+
+    # monitor is class with static method echo
+    - { cron: '*/2 * * * *', callback: App\Model\Monitor::echo }
 ```
 
-Cron expression:
+Be careful with cron syntax, take a look at following example. You can also validate your cron
+using [crontab.guru](https://crontab.guru).
 
+```
     *    *    *    *    *
     -    -    -    -    -
     |    |    |    |    |
@@ -68,66 +76,83 @@ Cron expression:
     |    |    +--------------- day of month (1 - 31)
     |    +-------------------- hour (0 - 23)
     +------------------------- min (0 - 59)
+```
 
 ### Custom job
 
-Use the `IJob` interface. Every job is registered as a service in the DIC, so you can use other services.
+Create new class which implements `IJob` interface.
 
 ```php
 use Contributte\Scheduler\IJob;
 
-class MyAwesomeJob implements IJob
+class ScheduledJob implements IJob
 {
 
-	public function isDue(DateTime $dateTime): bool
-	{
-		if ($jobIsReadyToRun) {
-			return true;
-		}
-		return false;
-	}
+    private $dateService;
 
-	public function run(): void
-	{
-		// Do something
-	}
+    private $statisticsService;
+
+    public function __construct($dateService, $statisticsService) {
+        $this->dateService = $dateService;
+        $this->statisticsService = $statisticsService;
+    }
+
+    public function isDue(DateTime $dateTime): bool
+    {
+        if ($this->dateService->isRightTime($dateTime)) {
+            return true;
+        }
+        return false;
+    }
+
+    public function run(): void
+    {
+        $this->statisticsService->calculate();
+    }
 
 }
 
 ```
 
-And don't forget to register it.
+Register your class into `config.neon` as regular services
+into [nette dependency-injection container](https://doc.nette.org/en/3.0/dependency-injection).
 
 ```yaml
 scheduler:
-    jobs:
-        - App\Model\MyAwesomeJob
-        myOtherJob: App\Model\MyOtherJob
+  jobs:
+    - App\Model\ScheduledJob()
+    - App\Model\OtherScheduledJob()
 ```
 
-## Commands
+You can also reference already registered service.
 
-### Help
+```yaml
+services:
+  scheduledJob: App\Model\ScheduledJob
 
-Print cron syntax.
+scheduler:
+  jobs:
+    - @scheduled
+```
+
+## Console
+
+This package relies on `symfony/console`, use prepared [contributte/console](https://github.com/contributte/console)
+integration.
 
 ```bash
-scheduler:help
+composer require contributte/console
 ```
 
-### List
-
-List all jobs.
-
-```bash
-scheduler:list
+```yaml
+extensions:
+  console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
 ```
 
-### Run
+After that you can fire one of these commands.
 
-Run all due jobs.
-
-```bash
-scheduler:run
-```
-
+| Command        | Info               |
+|----------------|--------------------|
+| scheduler:help | Print cron syntax. |
+| scheduler:list | List all jobs.     |
+| scheduler:run  | Run all due jobs.  |
