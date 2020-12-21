@@ -21,12 +21,14 @@ Toolkit::test(function (): void {
 		$compiler->loadConfig(FileMock::create("
 			services:
 				callbackJob: Tests\Fixtures\CallbackJob
+				scheduledJob: Tests\Fixtures\CustomJob
 
 			scheduler:
 				jobs:
 					- {cron: '* * * * *', callback: Tests\Fixtures\CallbackJob::foo}
 					- {cron: '* * * * *', callback: [@callbackJob, bar]}
 					- Tests\Fixtures\CustomJob
+					- @scheduledJob
 			", 'neon'));
 	}, [getmypid(), 1]);
 
@@ -35,5 +37,5 @@ Toolkit::test(function (): void {
 
 	$scheduler = $container->getByType(IScheduler::class);
 	Assert::type(IScheduler::class, $scheduler);
-	Assert::count(3, $scheduler->getAll());
+	Assert::count(4, $scheduler->getAll());
 });
