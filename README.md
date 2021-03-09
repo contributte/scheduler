@@ -22,7 +22,7 @@ Website ðŸš€ <a href="https://contributte.org">contributte.org</a> | Contact ðŸ‘
 
 To install latest version of `contributte/scheduler` use [Composer](https://getcomposer.com).
 
-```
+```bash
 composer install contributte/scheduler
 ```
 
