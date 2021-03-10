@@ -19,9 +19,9 @@ composer require contributte/scheduler
 
 Register extension
 
-```yaml
+```neon
 extensions:
-  scheduler: Contributte\Scheduler\DI\SchedulerExtension
+	scheduler: Contributte\Scheduler\DI\SchedulerExtension
 ```
 
 ## Configuration
@@ -34,9 +34,9 @@ Set-up crontab. Use the `scheduler:run` command.
 
 Optionally, you can set a temp path for storing lock files.
 
-```yaml
+```neon
 scheduler:
-  path: '%tempDir%/scheduler'
+	path: '%tempDir%/scheduler'
 ```
 
 ## Jobs
@@ -50,32 +50,32 @@ This package defines 2 types of jobs:
 
 Register your callbacks under `scheduler.jobs` key.
 
-```yaml
+```neon
 services:
-  stats: App\Model\Stats
+	stats: App\Model\Stats
 
 scheduler:
-  jobs:
-    # stats must be registered as service and have method calculate
-    - { cron: '* * * * *', callback: [ @stats, calculate ] }
+	jobs:
+		# stats must be registered as service and have method calculate
+		- { cron: '* * * * *', callback: [ @stats, calculate ] }
 
-    # monitor is class with static method echo
-    - { cron: '*/2 * * * *', callback: App\Model\Monitor::echo }
+		# monitor is class with static method echo
+		- { cron: '*/2 * * * *', callback: App\Model\Monitor::echo }
 ```
 
 Be careful with cron syntax, take a look at following example. You can also validate your cron
 using [crontab.guru](https://crontab.guru).
 
 ```
-    *    *    *    *    *
-    -    -    -    -    -
-    |    |    |    |    |
-    |    |    |    |    |
-    |    |    |    |    +----- day of week (0 - 7) (Sunday=0 or 7)
-    |    |    |    +---------- month (1 - 12)
-    |    |    +--------------- day of month (1 - 31)
-    |    +-------------------- hour (0 - 23)
-    +------------------------- min (0 - 59)
+	*	*	*	*	*
+	-	-	-	-	-
+	|	|	|	|	|
+	|	|	|	|	|
+	|	|	|	|	+----- day of week (0 - 7) (Sunday=0 or 7)
+	|	|	|	+---------- month (1 - 12)
+	|	|	+--------------- day of month (1 - 31)
+	|	+-------------------- hour (0 - 23)
+	+------------------------- min (0 - 59)
 ```
 
 ### Custom job
@@ -88,27 +88,27 @@ use Contributte\Scheduler\IJob;
 class ScheduledJob implements IJob
 {
 
-    private $dateService;
+	private $dateService;
 
-    private $statisticsService;
+	private $statisticsService;
 
-    public function __construct($dateService, $statisticsService) {
-        $this->dateService = $dateService;
-        $this->statisticsService = $statisticsService;
-    }
+	public function __construct($dateService, $statisticsService) {
+		$this->dateService = $dateService;
+		$this->statisticsService = $statisticsService;
+	}
 
-    public function isDue(DateTime $dateTime): bool
-    {
-        if ($this->dateService->isRightTime($dateTime)) {
-            return true;
-        }
-        return false;
-    }
+	public function isDue(DateTime $dateTime): bool
+	{
+		if ($this->dateService->isRightTime($dateTime)) {
+			return true;
+		}
+		return false;
+	}
 
-    public function run(): void
-    {
-        $this->statisticsService->calculate();
-    }
+	public function run(): void
+	{
+		$this->statisticsService->calculate();
+	}
 
 }
 
@@ -117,22 +117,22 @@ class ScheduledJob implements IJob
 Register your class into `config.neon` as regular services
 into [nette dependency-injection container](https://doc.nette.org/en/3.0/dependency-injection).
 
-```yaml
+```neon
 scheduler:
-  jobs:
-    - App\Model\ScheduledJob()
-    - App\Model\OtherScheduledJob()
+	jobs:
+		- App\Model\ScheduledJob()
+		- App\Model\OtherScheduledJob()
 ```
 
 You can also reference already registered service.
 
-```yaml
+```neon
 services:
-  scheduledJob: App\Model\ScheduledJob
+	scheduledJob: App\Model\ScheduledJob
 
 scheduler:
-  jobs:
-    - @scheduled
+	jobs:
+		- @scheduled
 ```
 
 ## Console
@@ -144,15 +144,15 @@ integration.
 composer require contributte/console
 ```
 
-```yaml
+```neon
 extensions:
-  console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
 ```
 
 After that you can fire one of these commands.
 
-| Command        | Info               |
-|----------------|--------------------|
-| scheduler:help | Print cron syntax. |
-| scheduler:list | List all jobs.     |
-| scheduler:run  | Run all due jobs.  |
+| Command		| Info					|
+|----------------|--------------------	|
+| scheduler:help | Print cron syntax.	|
+| scheduler:list | List all jobs.		|
+| scheduler:run  | Run all due jobs.	|
