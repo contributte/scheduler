@@ -32,7 +32,7 @@ class RunCommand extends Command
 	{
 		$this->scheduler->run();
 
-		return 0;
+		return Command::SUCCESS;
 	}
 
 }
