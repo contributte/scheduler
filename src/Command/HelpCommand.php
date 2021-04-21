@@ -33,7 +33,7 @@ class HelpCommand extends Command
 +------------------------- min (0 - 59)');
 		$output->writeln('');
 
-		return 0;
+		return Command::SUCCESS;
 	}
 
 }
