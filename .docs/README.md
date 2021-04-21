@@ -156,3 +156,4 @@ After that you can fire one of these commands.
 | scheduler:help | Print cron syntax.	|
 | scheduler:list | List all jobs.		|
 | scheduler:run  | Run all due jobs.	|
+| scheduler:force-run  | Force run selected scheduler job.	|
