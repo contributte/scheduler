@@ -47,8 +47,8 @@ class LockingScheduler extends Scheduler
 			} finally {
 				// Unlock
 				flock($fp, LOCK_UN);
-				unlink($this->path . '/' . $id . '.lock');
 				fclose($fp);
+				unlink($this->path . '/' . $id . '.lock');
 			}
 		}
 	}
