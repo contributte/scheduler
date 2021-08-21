@@ -4,6 +4,7 @@ namespace Contributte\Scheduler;
 
 use Contributte\Scheduler\Helpers\Debugger;
 use DateTime;
+use Nette\Utils\SafeStream;
 use RuntimeException;
 use Throwable;
 
@@ -51,6 +52,11 @@ class LockingScheduler extends Scheduler
 				unlink($this->path . '/' . $id . '.lock');
 			}
 		}
+	}
+
+	private function buildLastRunFilePath(): string
+	{
+		return SafeStream::PROTOCOL . '://' . $this->path . '/last-run';
 	}
 
 }
