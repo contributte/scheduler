@@ -7,7 +7,7 @@ use DateTime;
 interface IJob
 {
 
-	public function isDue(DateTime $dateTime): bool;
+	public function isDue(DateTime $dateTime, DateTimeInterface $lastRun = null): bool;
 
 	public function run(): void;
 
