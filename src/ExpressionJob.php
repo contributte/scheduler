@@ -16,11 +16,11 @@ abstract class ExpressionJob implements IJob
 		$this->expression = new CronExpression($cron);
 	}
 
-	public function isDue(DateTime $dateTime, DateTimeInterface $lastRun = null): bool
+	public function isDue(DateTime $dateTime, DateTimeInterface $lastCheck = null): bool
 	{
 		return (
 			$this->expression->isDue($dateTime)
-			|| ($lastRun !== null && $lastRun < $this->expression->getPreviousRunDate($dateTime))
+			|| ($lastCheck !== null && $lastCheck < $this->expression->getPreviousRunDate($dateTime))
 		);
 	}
 
