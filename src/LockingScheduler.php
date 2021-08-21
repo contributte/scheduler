@@ -26,11 +26,13 @@ class LockingScheduler extends Scheduler
 			throw new RuntimeException(sprintf('Directory `%s` was not created', $this->path));
 		}
 
+		$lastRun = $this->loadLastRunTime();
+
 		$dateTime = new DateTime();
 		$jobs = $this->jobs;
 
 		foreach ($jobs as $id => $job) {
-			if (!$job->isDue($dateTime)) {
+			if (!$job->isDue($dateTime, $lastRun)) {
 				continue;
 			}
 
@@ -53,6 +55,8 @@ class LockingScheduler extends Scheduler
 				unlink($this->path . '/' . $id . '.lock');
 			}
 		}
+
+		$this->saveLastRunTime($dateTime);
 	}
 
 	private function loadLastRunTime(): ?DateTimeInterface
