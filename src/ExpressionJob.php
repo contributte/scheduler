@@ -4,6 +4,7 @@ namespace Contributte\Scheduler;
 
 use Cron\CronExpression;
 use DateTime;
+use DateTimeInterface;
 
 abstract class ExpressionJob implements IJob
 {

@@ -3,6 +3,7 @@
 namespace Contributte\Scheduler;
 
 use DateTime;
+use DateTimeInterface;
 
 interface IJob
 {
