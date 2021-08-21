@@ -4,6 +4,7 @@ namespace Contributte\Scheduler;
 
 use Contributte\Scheduler\Helpers\Debugger;
 use DateTime;
+use DateTimeInterface;
 use Nette\Utils\SafeStream;
 use RuntimeException;
 use Throwable;
@@ -52,6 +53,25 @@ class LockingScheduler extends Scheduler
 				unlink($this->path . '/' . $id . '.lock');
 			}
 		}
+	}
+
+	private function loadLastRunTime(): ?DateTimeInterface
+	{
+		$file = $this->buildLastRunFilePath();
+		if (file_exists($file)) {
+			$lastRun = DateTime::createFromFormat('U', file_get_contents($file));
+			if ($lastRun !== false) {
+				return $lastRun;
+			}
+		}
+
+		return null;
+	}
+
+	private function saveLastRunTime(DateTimeInterface $now): void
+	{
+		$file = $this->buildLastRunFilePath();
+		file_put_contents($file, $now->format('U'));
 	}
 
 	private function buildLastRunFilePath(): string
