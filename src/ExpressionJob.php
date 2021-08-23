@@ -19,10 +19,7 @@ abstract class ExpressionJob implements IJob
 
 	public function isDue(DateTime $dateTime, ?DateTimeInterface $lastCheck = null): bool
 	{
-		return (
-			$this->expression->isDue($dateTime)
-			|| ($lastCheck !== null && $lastCheck < $this->expression->getPreviousRunDate($dateTime))
-		);
+		return $this->expression->isDue($dateTime) || ($lastCheck !== null && $lastCheck < $this->expression->getPreviousRunDate($dateTime));
 	}
 
 	public function getExpression(): CronExpression
