@@ -63,9 +63,12 @@ class LockingScheduler extends Scheduler
 	{
 		$file = $this->buildLastRunFilePath();
 		if (file_exists($file)) {
-			$lastRun = DateTime::createFromFormat('U', file_get_contents($file));
+			$lastRun = file_get_contents($file);
 			if ($lastRun !== false) {
-				return $lastRun;
+				$lastRun = DateTime::createFromFormat('U', $lastRun);
+				if ($lastRun !== false) {
+					return $lastRun;
+				}
 			}
 		}
 
