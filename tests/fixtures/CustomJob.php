@@ -9,7 +9,7 @@ use DateTimeInterface;
 final class CustomJob implements IJob
 {
 
-	public function isDue(DateTime $dateTime, DateTimeInterface $lastCheck = null): bool
+	public function isDue(DateTime $dateTime, ?DateTimeInterface $lastCheck = null): bool
 	{
 		return true;
 	}

@@ -17,7 +17,7 @@ abstract class ExpressionJob implements IJob
 		$this->expression = new CronExpression($cron);
 	}
 
-	public function isDue(DateTime $dateTime, DateTimeInterface $lastCheck = null): bool
+	public function isDue(DateTime $dateTime, ?DateTimeInterface $lastCheck = null): bool
 	{
 		return (
 			$this->expression->isDue($dateTime)
