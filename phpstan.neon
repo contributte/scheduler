@@ -5,6 +5,7 @@ includes:
 	- vendor/phpstan/phpstan-strict-rules/rules.neon
 
 parameters:
+	reportMaybesInPropertyPhpDocTypes: false
 	ignoreErrors:
 		- '#^Parameter \#1 \$fp of function (flock|fclose) expects resource, resource\|false given\.$#'
 		- '#^Cannot access offset (0|1) on callable\(\)\: mixed\.$#'
