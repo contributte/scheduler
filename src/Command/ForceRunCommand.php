@@ -34,7 +34,7 @@ class ForceRunCommand extends Command
 	{
 		$key = $input->getArgument('key');
 
-		if (is_array($key) || $key === null) {
+		if (!is_string($key) && !is_int($key)) {
 			return Command::FAILURE;
 		}
 

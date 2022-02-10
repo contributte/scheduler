@@ -3,6 +3,7 @@
 namespace Contributte\Scheduler\Command;
 
 use Contributte\Scheduler\CallbackJob;
+use Contributte\Scheduler\Exceptions\LogicalException;
 use Contributte\Scheduler\ExpressionJob;
 use Contributte\Scheduler\IJob;
 use Contributte\Scheduler\IScheduler;
@@ -74,10 +75,12 @@ class ListCommand extends Command
 			$callback = $job->getCallback();
 			if (is_string($callback)) {
 				$row[] = $callback;
-			} else {
+			} elseif (is_array($callback)) {
 				$class = $callback[0];
 				$callback = $callback[1];
 				$row[] = get_class($class) . '->' . $callback . '()';
+			} else {
+				throw new LogicalException('Unknown callback');
 			}
 		} else {
 			$row[] = 'Dynamic';

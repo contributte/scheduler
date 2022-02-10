@@ -2,9 +2,9 @@
 
 namespace Contributte\Scheduler;
 
+use Contributte\Scheduler\Exceptions\RuntimeException;
 use Contributte\Scheduler\Helpers\Debugger;
 use DateTime;
-use RuntimeException;
 use Throwable;
 
 class LockingScheduler extends Scheduler
@@ -34,6 +34,11 @@ class LockingScheduler extends Scheduler
 
 			// Create lock
 			$fp = fopen($this->path . '/' . $id . '.lock', 'w+');
+
+			if ($fp === false) {
+				throw new RuntimeException('Cannot acquire lock');
+			}
+
 			if (!flock($fp, LOCK_EX | LOCK_NB)) {  // acquire an exclusive lock
 				fclose($fp);
 				continue;
