@@ -2,7 +2,6 @@
 
 namespace Contributte\Scheduler\DI;
 
-use Contributte\DI\Helper\ExtensionDefinitionsHelper;
 use Contributte\Scheduler\CallbackJob;
 use Contributte\Scheduler\Command\ForceRunCommand;
 use Contributte\Scheduler\Command\HelpCommand;
@@ -13,7 +12,6 @@ use Contributte\Scheduler\LockingScheduler;
 use Contributte\Scheduler\Scheduler;
 use InvalidArgumentException;
 use Nette\DI\CompilerExtension;
-use Nette\DI\Definitions\Definition;
 use Nette\DI\Definitions\Statement;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
@@ -39,7 +37,6 @@ class SchedulerExtension extends CompilerExtension
 	{
 		$builder = $this->getContainerBuilder();
 		$config = $this->config;
-		$definitionHelper = new ExtensionDefinitionsHelper($this->compiler);
 
 		// Scheduler
 		$schedulerDefinition = $builder->addDefinition($this->prefix('scheduler'))
@@ -73,11 +70,9 @@ class SchedulerExtension extends CompilerExtension
 
 				$jobDefinition = new Statement(CallbackJob::class, [$jobConfig['cron'], $jobConfig['callback']]);
 			} else {
-				$jobPrefix = $this->prefix('job.' . $jobName);
-				$jobDefinition = $definitionHelper->getDefinitionFromConfig($jobConfig, $jobPrefix);
-				if ($jobDefinition instanceof Definition) {
-					$jobDefinition->setAutowired(false);
-				}
+				$jobDefinition = $builder->addDefinition($this->prefix('job.' . $jobName))
+					->setFactory($jobConfig)
+					->setAutowired(false);
 			}
 
 			$schedulerDefinition->addSetup('add', [$jobDefinition, $jobName]);

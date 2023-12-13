@@ -7,25 +7,16 @@ interface IScheduler
 
 	public function run(): void;
 
-	/**
-	 * @param string|int|null $key
-	 */
-	public function add(IJob $job, $key = null): void;
+	public function add(IJob $job, string|int|null $key = null): void;
 
-	/**
-	 * @param string|int $key
-	 */
-	public function get($key): ?IJob;
+	public function get(string|int $key): ?IJob;
 
 	/**
 	 * @return IJob[]
 	 */
 	public function getAll(): array;
 
-	/**
-	 * @param string|int $key
-	 */
-	public function remove($key): void;
+	public function remove(string|int $key): void;
 
 	public function removeAll(): void;
 

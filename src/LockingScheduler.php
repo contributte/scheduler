@@ -10,8 +10,7 @@ use Throwable;
 class LockingScheduler extends Scheduler
 {
 
-	/** @var string */
-	protected $path;
+	protected string $path;
 
 	public function __construct(string $path)
 	{
@@ -39,8 +38,9 @@ class LockingScheduler extends Scheduler
 				throw new RuntimeException('Cannot acquire lock');
 			}
 
-			if (!flock($fp, LOCK_EX | LOCK_NB)) {  // acquire an exclusive lock
+			if (!flock($fp, LOCK_EX | LOCK_NB)) { // acquire an exclusive lock
 				fclose($fp);
+
 				continue;
 			}
 

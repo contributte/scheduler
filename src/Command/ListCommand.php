@@ -17,15 +17,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ListCommand extends Command
 {
 
-	/** @var string */
-	protected static $defaultName = 'scheduler:list';
+	protected static string $defaultName = 'scheduler:list';
 
-	/** @var IScheduler */
-	private $scheduler;
+	private IScheduler $scheduler;
 
 	public function __construct(IScheduler $scheduler)
 	{
 		parent::__construct();
+
 		$this->scheduler = $scheduler;
 	}
 
@@ -59,16 +58,12 @@ class ListCommand extends Command
 		// Common
 		$row = [
 			$key,
-			get_class($job),
+			$job::class,
 			$job->isDue($dateTime) ? 'TRUE' : 'FALSE',
 		];
 
 		// Expression
-		if ($job instanceof ExpressionJob) {
-			$row[] = $job->getExpression();
-		} else {
-			$row[] = 'Dynamic';
-		}
+		$row[] = $job instanceof ExpressionJob ? $job->getExpression() : 'Dynamic';
 
 		// Callback
 		if ($job instanceof CallbackJob) {
@@ -78,7 +73,7 @@ class ListCommand extends Command
 			} elseif (is_array($callback)) {
 				$class = $callback[0];
 				$callback = $callback[1];
-				$row[] = get_class($class) . '->' . $callback . '()';
+				$row[] = $class::class . '->' . $callback . '()';
 			} else {
 				throw new LogicalException('Unknown callback');
 			}

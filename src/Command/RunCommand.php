@@ -10,15 +10,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class RunCommand extends Command
 {
 
-	/** @var string */
-	protected static $defaultName = 'scheduler:run';
+	protected static string $defaultName = 'scheduler:run';
 
-	/** @var IScheduler */
-	private $scheduler;
+	private IScheduler $scheduler;
 
 	public function __construct(IScheduler $scheduler)
 	{
 		parent::__construct();
+
 		$this->scheduler = $scheduler;
 	}
 

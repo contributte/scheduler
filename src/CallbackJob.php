@@ -11,6 +11,7 @@ class CallbackJob extends ExpressionJob
 	public function __construct(string $cron, callable $callback)
 	{
 		parent::__construct($cron);
+
 		$this->callback = $callback;
 	}
 

@@ -15,6 +15,7 @@ final class CustomJob implements IJob
 
 	public function run(): void
 	{
+		// Nothing
 	}
 
 }

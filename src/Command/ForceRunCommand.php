@@ -11,15 +11,14 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ForceRunCommand extends Command
 {
 
-	/** @var string */
-	protected static $defaultName = 'scheduler:force-run';
+	protected static string $defaultName = 'scheduler:force-run';
 
-	/** @var IScheduler */
-	private $scheduler;
+	private IScheduler $scheduler;
 
 	public function __construct(IScheduler $scheduler)
 	{
 		parent::__construct();
+
 		$this->scheduler = $scheduler;
 	}
 

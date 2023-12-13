@@ -9,8 +9,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 class HelpCommand extends Command
 {
 
-	/** @var string */
-	protected static $defaultName = 'scheduler:help';
+	protected static string $defaultName = 'scheduler:help';
 
 	protected function configure(): void
 	{

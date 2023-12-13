@@ -7,10 +7,12 @@ final class CallbackJob
 
 	public static function foo(): void
 	{
+		// Nothing
 	}
 
 	public function bar(): void
 	{
+		// Nothing
 	}
 
 }

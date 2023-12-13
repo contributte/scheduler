@@ -8,8 +8,7 @@ use DateTime;
 abstract class ExpressionJob implements IJob
 {
 
-	/** @var CronExpression */
-	protected $expression;
+	protected CronExpression $expression;
 
 	public function __construct(string $cron)
 	{
