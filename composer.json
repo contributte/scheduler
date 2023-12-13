@@ -27,14 +27,11 @@
     "symfony/console": "^6.4.1 || ^7.0.1"
   },
   "require-dev": {
-    "mockery/mockery": "^1.2.0",
-    "ninjify/qa": "^0.13",
-    "ninjify/nunjuck": "^0.4",
-    "phpstan/phpstan": "^1.0",
-    "phpstan/phpstan-deprecation-rules": "^1.0",
-    "phpstan/phpstan-nette": "^1.0",
-    "phpstan/phpstan-strict-rules": "^1.0",
-    "tracy/tracy": "^2.6.2"
+    "mockery/mockery": "^1.6.7",
+    "contributte/qa": "^0.4",
+    "contributte/tester": "^0.4",
+    "contributte/phpstan": "^0.1",
+    "tracy/tracy": "^2.9.8"
   },
   "autoload": {
     "psr-4": {
