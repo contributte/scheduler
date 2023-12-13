@@ -9,15 +9,18 @@ use Contributte\Scheduler\IJob;
 use Contributte\Scheduler\IScheduler;
 use Cron\CronExpression;
 use Nette\Utils\DateTime;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Helper\Table;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+	name: 'scheduler:list',
+	description: 'List all scheduler jobs'
+)]
 class ListCommand extends Command
 {
-
-	protected static string $defaultName = 'scheduler:list';
 
 	private IScheduler $scheduler;
 
@@ -26,12 +29,6 @@ class ListCommand extends Command
 		parent::__construct();
 
 		$this->scheduler = $scheduler;
-	}
-
-	protected function configure(): void
-	{
-		$this->setName(self::$defaultName)
-			->setDescription('List all scheduler jobs');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int

@@ -2,20 +2,17 @@
 
 namespace Contributte\Scheduler\Command;
 
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+	name: 'scheduler:help',
+	description: 'Print cron syntax'
+)]
 class HelpCommand extends Command
 {
-
-	protected static string $defaultName = 'scheduler:help';
-
-	protected function configure(): void
-	{
-		$this->setName(self::$defaultName)
-			->setDescription('Print cron syntax');
-	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
 	{

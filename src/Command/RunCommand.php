@@ -3,14 +3,17 @@
 namespace Contributte\Scheduler\Command;
 
 use Contributte\Scheduler\IScheduler;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
+#[AsCommand(
+	name: 'scheduler:run',
+	description: 'Run scheduler jobs'
+)]
 class RunCommand extends Command
 {
-
-	protected static string $defaultName = 'scheduler:run';
 
 	private IScheduler $scheduler;
 
@@ -19,12 +22,6 @@ class RunCommand extends Command
 		parent::__construct();
 
 		$this->scheduler = $scheduler;
-	}
-
-	protected function configure(): void
-	{
-		$this->setName(self::$defaultName)
-			->setDescription('Run scheduler jobs');
 	}
 
 	protected function execute(InputInterface $input, OutputInterface $output): int
