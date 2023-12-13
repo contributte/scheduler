@@ -21,7 +21,7 @@
     }
   ],
   "require": {
-    "php": ">=7.2",
+    "php": ">=8.1",
     "contributte/di": "^0.5",
     "dragonmantank/cron-expression": "^3.0.1",
     "symfony/console": "^5.0.0 || ^6.0.0"
