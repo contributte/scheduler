@@ -1,8 +1,8 @@
 ![](https://heatbadger.now.sh/github/readme/contributte/scheduler/)
 
 <p align=center>
-  <a href="https://github.com/contributte/scheduler/actions"><img src="https://badgen.net/github/checks/contributte/scheduler/master?cache=300"></a>
-  <a href="https://coveralls.io/r/contributte/scheduler"><img src="https://badgen.net/coveralls/c/github/contributte/scheduler?cache=300"></a>
+  <a href="https://github.com/contributte/scheduler/actions"><img src="https://badgen.net/github/checks/contributte/scheduler/master"></a>
+  <a href="https://codecov.io/gh/contributte/scheduler"><img src="https://badgen.net/codecov/c/github/contributte/scheduler"></a>
   <a href="https://packagist.org/packages/contributte/scheduler"><img src="https://badgen.net/packagist/dm/contributte/scheduler"></a>
   <a href="https://packagist.org/packages/contributte/scheduler"><img src="https://badgen.net/packagist/v/contributte/scheduler"></a>
 </p>
