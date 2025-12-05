@@ -120,8 +120,8 @@ into [nette dependency-injection container](https://doc.nette.org/en/3.0/depende
 ```neon
 scheduler:
 	jobs:
-		- App\Model\ScheduledJob()
-		- App\Model\OtherScheduledJob()
+		- App\Model\ScheduledJob
+		- App\Model\OtherScheduledJob
 ```
 
 You can also reference already registered service.
@@ -132,8 +132,20 @@ services:
 
 scheduler:
 	jobs:
-		- @scheduled
+		- @scheduledJob
 ```
+
+### Job with inject support
+
+If your job class uses `inject*` methods for dependency injection, you can enable auto-injection using the `inject` option:
+
+```neon
+scheduler:
+	jobs:
+		myJob: {class: App\Model\ScheduledJob, inject: true}
+```
+
+This will automatically call all `inject*` methods on the job class after instantiation.
 
 ## Console
 
