@@ -13,6 +13,7 @@ use Contributte\Scheduler\Scheduler;
 use InvalidArgumentException;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\Statement;
+use Nette\DI\Extensions\InjectExtension;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use stdClass;
@@ -69,6 +70,16 @@ class SchedulerExtension extends CompilerExtension
 				}
 
 				$jobDefinition = new Statement(CallbackJob::class, [$jobConfig['cron'], $jobConfig['callback']]);
+			} elseif (is_array($jobConfig) && isset($jobConfig['class'])) {
+				$inject = $jobConfig['inject'] ?? false;
+
+				$jobDefinition = $builder->addDefinition($this->prefix('job.' . $jobName))
+					->setFactory($jobConfig['class'])
+					->setAutowired(false);
+
+				if ($inject) {
+					$jobDefinition->addTag(InjectExtension::TagInject);
+				}
 			} else {
 				$jobDefinition = $builder->addDefinition($this->prefix('job.' . $jobName))
 					->setFactory($jobConfig)
