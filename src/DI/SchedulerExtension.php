@@ -13,6 +13,7 @@ use Contributte\Scheduler\Scheduler;
 use InvalidArgumentException;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\Statement;
+use Nette\DI\Extensions\InjectExtension;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use stdClass;
@@ -28,7 +29,7 @@ class SchedulerExtension extends CompilerExtension
 		return Expect::structure([
 			'path' => Expect::string()->nullable(),
 			'jobs' => Expect::arrayOf(
-				Expect::anyOf(Expect::string(), Expect::array(), Expect::type(Statement::class))
+				Expect::anyOf(Expect::string(), Expect::array())
 			),
 		]);
 	}
@@ -63,16 +64,40 @@ class SchedulerExtension extends CompilerExtension
 
 		// Jobs
 		foreach ($config->jobs as $jobName => $jobConfig) {
-			if (is_array($jobConfig) && (isset($jobConfig['cron']) || isset($jobConfig['callback']))) {
-				if (!isset($jobConfig['cron'], $jobConfig['callback'])) {
-					throw new InvalidArgumentException(sprintf('Both options "callback" and "cron" of %s > jobs > %s must be configured', $this->name, $jobName));
-				}
+			// 1. Array config
+			if (is_array($jobConfig)) {
+				// Callback job with cron expression
+				if (isset($jobConfig['cron']) || isset($jobConfig['callback'])) {
+					if (!isset($jobConfig['cron'], $jobConfig['callback'])) {
+						throw new InvalidArgumentException(sprintf('Both options "callback" and "cron" of %s > jobs > %s must be configured', $this->name, $jobName));
+					}
 
-				$jobDefinition = new Statement(CallbackJob::class, [$jobConfig['cron'], $jobConfig['callback']]);
-			} else {
+					$jobDefinition = new Statement(CallbackJob::class, [$jobConfig['cron'], $jobConfig['callback']]);
+				} else {
+					// Class config with optional inject
+					$class = $jobConfig['class'] ?? null;
+					if ($class === null) {
+						throw new InvalidArgumentException(sprintf('Option "class" of %s > jobs > %s must be configured', $this->name, $jobName));
+					}
+
+					$inject = $jobConfig['inject'] ?? false;
+
+					$jobDefinition = $builder->addDefinition($this->prefix('job.' . $jobName))
+						->setFactory($class)
+						->setAutowired(false);
+
+					if ($inject) {
+						$jobDefinition->addTag(InjectExtension::TagInject);
+					}
+				}
+			// 2. String config (class name or service reference)
+			} elseif (is_string($jobConfig)) {
 				$jobDefinition = $builder->addDefinition($this->prefix('job.' . $jobName))
 					->setFactory($jobConfig)
 					->setAutowired(false);
+			// 3. Invalid config
+			} else {
+				throw new InvalidArgumentException(sprintf('Job %s > jobs > %s must be a string or array', $this->name, $jobName));
 			}
 
 			$schedulerDefinition->addSetup('add', [$jobDefinition, $jobName]);
