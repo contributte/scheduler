@@ -76,7 +76,7 @@ class SchedulerExtension extends CompilerExtension
 				} else {
 					// Class config with optional inject
 					$class = $jobConfig['class'] ?? null;
-					if ($class === null) {
+					if ($class === null || !is_string($class)) {
 						throw new InvalidArgumentException(sprintf('Option "class" of %s > jobs > %s must be configured', $this->name, $jobName));
 					}
 

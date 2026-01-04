@@ -69,8 +69,10 @@ class ListCommand extends Command
 				$row[] = $callback;
 			} elseif (is_array($callback)) {
 				$class = $callback[0];
-				$callback = $callback[1];
-				$row[] = $class::class . '->' . $callback . '()';
+				$method = $callback[1];
+				assert(is_object($class));
+				assert(is_string($method));
+				$row[] = $class::class . '->' . $method . '()';
 			} else {
 				throw new LogicalException('Unknown callback');
 			}
