@@ -7,6 +7,7 @@ Executing php callbacks using cron expression.
 - [Setup](#setup)
 - [Configuration](#configuration)
 - [Jobs](#jobs)
+- [Providers](#providers)
 - [Commands](#commands)
 
 ## Setup
@@ -38,6 +39,9 @@ Optionally, you can set a temp path for storing lock files.
 scheduler:
 	path: '%tempDir%/scheduler'
 ```
+
+Experimental Symfony Scheduler provider integration is also available via `scheduler.providers`.
+It is additive and does not replace the legacy `scheduler.jobs` setup.
 
 ## Jobs
 
@@ -147,6 +151,61 @@ scheduler:
 
 This will automatically call all `inject*` methods on the job class after instantiation.
 
+## Providers
+
+You can explicitly register Symfony Scheduler providers by schedule name.
+Each entry accepts either a provider class / `@service` shorthand or a structure
+with `provider`, `lock`, `state`, and `processOnlyLastMissedRun` options.
+
+```neon
+services:
+	defaultScheduleProvider: App\Scheduler\DefaultScheduleProvider
+
+scheduler:
+	providers:
+		default: App\Scheduler\DefaultScheduleProvider
+		reports: @defaultScheduleProvider
+		generated:
+			lock: @schedulerLock
+			state: @schedulerState
+			processOnlyLastMissedRun: true
+```
+
+`lock` must reference a service implementing `Symfony\Component\Lock\LockInterface`
+and `state` must reference a service implementing `Symfony\Contracts\Cache\CacheInterface`.
+Structure-only entries are useful for decorating discovered providers or task-generated schedules;
+without a provider or tasks they simply describe an empty schedule.
+
+Registered providers are exposed through an experimental `SchedulerTransportFactory`,
+so `schedule://default` can be used where a Symfony Scheduler transport is needed.
+
+Providers can also be discovered automatically from services implementing
+`ScheduleProviderInterface` and using Symfony's `#[AsSchedule('name')]` attribute.
+Explicit `scheduler.providers` entries and manually tagged
+`contributte.scheduler.provider` services stay authoritative for the same schedule name.
+
+Scheduler task attributes are also supported on services. Use Symfony's
+`#[AsCronTask]` or `#[AsPeriodicTask]` on a class or public method and this extension
+will generate or extend the target schedule provider additively.
+
+If the service is a console command, task attributes generate `RunCommandMessage`
+instances using the resolved command name instead of `ServiceCallMessage`.
+Command-task execution therefore expects a `Symfony\Component\Console\Application`
+service, typically provided by [contributte/console](https://github.com/contributte/console).
+
+For each provider, this extension also registers a transport service named
+`scheduler.transport.<name>`. These services are tagged for
+[contributte/messenger](https://github.com/contributte/messenger), where they become available under
+Messenger transport names like `scheduler_default`.
+
+When [contributte/messenger](https://github.com/contributte/messenger) is present, the extension also wires Symfony's
+`DispatchSchedulerEventListener` to messenger worker events. It prefers an existing application event dispatcher for
+`PreRunEvent`, `PostRunEvent`, and `FailureEvent`; otherwise it falls back to its own lightweight
+`scheduler.event.dispatcher` service.
+
+If you use [contributte/console](https://github.com/contributte/console), the native Symfony
+`debug:scheduler` command is also available for registered providers.
+
 ## Console
 
 This package relies on `symfony/console`, use prepared [contributte/console](https://github.com/contributte/console)
@@ -169,3 +228,4 @@ After that you can fire one of these commands.
 | scheduler:list | List all jobs.		|
 | scheduler:run  | Run all due jobs.	|
 | scheduler:force-run  | Force run selected scheduler job.	|
+| debug:scheduler | List registered Symfony schedules. |
