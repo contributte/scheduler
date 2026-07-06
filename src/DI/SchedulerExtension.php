@@ -7,6 +7,12 @@ use Contributte\Scheduler\Command\ForceRunCommand;
 use Contributte\Scheduler\Command\HelpCommand;
 use Contributte\Scheduler\Command\ListCommand;
 use Contributte\Scheduler\Command\RunCommand;
+use Contributte\Scheduler\DI\Pass\AbstractPass;
+use Contributte\Scheduler\DI\Pass\ConsolePass;
+use Contributte\Scheduler\DI\Pass\EventPass;
+use Contributte\Scheduler\DI\Pass\ProviderPass;
+use Contributte\Scheduler\DI\Pass\TaskPass;
+use Contributte\Scheduler\DI\Pass\TransportPass;
 use Contributte\Scheduler\IScheduler;
 use Contributte\Scheduler\LockingScheduler;
 use Contributte\Scheduler\Scheduler;
@@ -14,6 +20,7 @@ use InvalidArgumentException;
 use Nette\DI\CompilerExtension;
 use Nette\DI\Definitions\Statement;
 use Nette\DI\Extensions\InjectExtension;
+use Nette\PhpGenerator\ClassType;
 use Nette\Schema\Expect;
 use Nette\Schema\Schema;
 use stdClass;
@@ -24,13 +31,44 @@ use stdClass;
 class SchedulerExtension extends CompilerExtension
 {
 
+	public const PROVIDER_TAG = 'contributte.scheduler.provider';
+	public const TRANSPORT_FACTORY_TAG = 'contributte.messenger.transport_factory';
+	public const TRANSPORT_TAG = 'contributte.messenger.transport';
+	public const HANDLER_TAG = 'contributte.messenger.handler';
+
+	/** @var AbstractPass[] */
+	private array $passes = [];
+
+	public function __construct()
+	{
+		$this->passes[] = new ProviderPass($this);
+		$this->passes[] = new TaskPass($this);
+		$this->passes[] = new TransportPass($this);
+		$this->passes[] = new EventPass($this);
+		$this->passes[] = new ConsolePass($this);
+	}
+
 	public function getConfigSchema(): Schema
 	{
+		$providerConfigSchema = Expect::anyOf(
+			Expect::string(),
+			Expect::structure([
+				'provider' => Expect::string()->nullable(),
+				'lock' => Expect::string()->nullable(),
+				'state' => Expect::string()->nullable(),
+				'processOnlyLastMissedRun' => Expect::bool()->nullable(),
+			]),
+		);
+
 		return Expect::structure([
 			'path' => Expect::string()->nullable(),
 			'jobs' => Expect::arrayOf(
 				Expect::anyOf(Expect::string(), Expect::array())
-			),
+			)->default([]),
+			'providers' => Expect::arrayOf(
+				$providerConfigSchema,
+				Expect::string()->required(),
+			)->default([]),
 		]);
 	}
 
@@ -80,7 +118,7 @@ class SchedulerExtension extends CompilerExtension
 						throw new InvalidArgumentException(sprintf('Option "class" of %s > jobs > %s must be configured', $this->name, $jobName));
 					}
 
-					$inject = $jobConfig['inject'] ?? false;
+					$inject = (bool) ($jobConfig['inject'] ?? false);
 
 					$jobDefinition = $builder->addDefinition($this->prefix('job.' . $jobName))
 						->setFactory($class)
@@ -101,6 +139,24 @@ class SchedulerExtension extends CompilerExtension
 			}
 
 			$schedulerDefinition->addSetup('add', [$jobDefinition, $jobName]);
+		}
+
+		foreach ($this->passes as $pass) {
+			$pass->loadPassConfiguration();
+		}
+	}
+
+	public function beforeCompile(): void
+	{
+		foreach ($this->passes as $pass) {
+			$pass->beforePassCompile();
+		}
+	}
+
+	public function afterCompile(ClassType $class): void
+	{
+		foreach ($this->passes as $pass) {
+			$pass->afterPassCompile($class);
 		}
 	}
 

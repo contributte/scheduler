@@ -22,15 +22,22 @@
   ],
   "require": {
     "php": ">=8.2",
-    "nette/di": "^3.1.8",
     "dragonmantank/cron-expression": "^3.3.3",
-    "symfony/console": "^6.4.1 || ^7.0.1 || ^8.0.0"
+    "nette/di": "^3.1.8",
+    "symfony/cache-contracts": "^3.5",
+    "symfony/console": "^6.4.1 || ^7.0.1 || ^8.0.0",
+    "symfony/lock": "^6.4.1 || ^7.0.1 || ^8.0.0",
+    "symfony/messenger": "^6.4.1 || ^7.0.1 || ^8.0.0",
+    "symfony/scheduler": "^6.4.0 || ^7.0.0 || ^8.0.0",
+    "symfony/service-contracts": "^2.5 || ^3.0"
   },
   "require-dev": {
-    "mockery/mockery": "^1.6.12",
+    "contributte/messenger": "^0.2",
+    "contributte/phpstan": "^0.2.0",
     "contributte/qa": "^0.4.0",
     "contributte/tester": "^0.4.0",
-    "contributte/phpstan": "^0.2.0",
+    "mockery/mockery": "^1.6.12",
+    "symfony/cache": "^6.4.1 || ^7.0.1 || ^8.0.0",
     "tracy/tracy": "^2.10.5"
   },
   "autoload": {
