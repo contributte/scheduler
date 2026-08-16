@@ -42,13 +42,39 @@ extensions:
 	scheduler: Contributte\Scheduler\DI\SchedulerExtension
 ```
 
-## Configuration
+## Quick start
 
-Set up crontab. Use the `scheduler:run` command.
+The scheduler commands require the [contributte/console](https://github.com/contributte/console) integration:
+
+```bash
+composer require contributte/console
+```
+
+```neon
+extensions:
+	console: Contributte\Console\DI\ConsoleExtension(%consoleMode%)
+
+services:
+	stats: App\Model\Stats
+
+scheduler:
+	jobs:
+		- { cron: '* * * * *', callback: [ @stats, calculate ] }
+```
+
+Run due jobs from the configured console entry point:
+
+```bash
+php path-to-project/console scheduler:run
+```
+
+When the current minute matches, `Stats::calculate()` is called. Schedule that complete command from cron afterwards:
 
 ```
 * * * * * php path-to-project/console scheduler:run
 ```
+
+## Configuration
 
 Optionally, you can set a temp path for storing lock files.
 
